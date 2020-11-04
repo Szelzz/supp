@@ -1,0 +1,13 @@
+﻿@page
+@model Supp.Web.Pages.Posts.CreateModel
+
+<form method="post">
+    Title
+    <input asp-for="Post.Title" />
+    <br />
+    Body
+    <textarea asp-for="Post.Body" style="width:100%;height:150px"></textarea>
+    <br />
+
+    <input type="submit" value="Dodaj" />
+</form>

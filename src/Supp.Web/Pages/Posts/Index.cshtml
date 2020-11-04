@@ -1,0 +1,9 @@
+﻿@page
+@model Supp.Web.Pages.Posts.ListModel
+@{
+}
+<a asp-page="./Create">Dodaj nowy</a>
+@foreach (var post in Model.Posts)
+{
+    <h2><a asp-page="./Get" asp-route-id="@post.Id">@post.Title</a></h2>
+}
