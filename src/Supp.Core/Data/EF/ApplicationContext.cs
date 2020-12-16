@@ -20,10 +20,24 @@ namespace Supp.Core.Data.EF
         }
 
         public DbSet<Post> Posts { get; set; }
+        public DbSet<PostRelation> PostRelations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("Default"));
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Post>()
+                .HasMany(p => p.Parents)
+                .WithOne(r => r.Parent)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Post>()
+                .HasMany(p => p.Children)
+                .WithOne(r => r.Child)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
