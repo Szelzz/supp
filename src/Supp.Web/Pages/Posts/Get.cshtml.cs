@@ -10,18 +10,18 @@ namespace Supp.Web.Pages.Posts
 {
     public class GetModel : PageModel
     {
-        private readonly IPostRepository postRepository;
+        private readonly PostService postService;
 
-        public GetModel(IPostRepository postRepository)
+        public GetModel(PostService postService)
         {
-            this.postRepository = postRepository;
+            this.postService = postService;
         }
 
         public Post Post { get; set; }
 
-        public void OnGet(int id)
+        public async Task OnGetAsync(int id)
         {
-            Post = postRepository.Get(id);
+            Post = await postService.GetPostAsync(id);
         }
     }
 }

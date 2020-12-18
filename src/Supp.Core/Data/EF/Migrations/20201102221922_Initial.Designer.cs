@@ -9,7 +9,7 @@ using Supp.Core.Data.EF;
 
 namespace Supp.Core.Migrations
 {
-    [DbContext(typeof(ApplicationContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20201102221922_Initial")]
     partial class Initial
     {

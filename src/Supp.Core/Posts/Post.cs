@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Supp.Core.Projects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,6 +18,10 @@ namespace Supp.Core.Posts
 
         public List<PostRelation> Children { get; set; }
             = new List<PostRelation>();
+
+        public int ProjectId { get; set; }
+        public Project Project { get; set; }
+
         public bool Archived { get; set; }
 
     }

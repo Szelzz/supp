@@ -1,4 +1,5 @@
-﻿using Supp.Core.Data.EF;
+﻿using Microsoft.EntityFrameworkCore;
+using Supp.Core.Data.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace Supp.Core.Posts
 {
     public class PostService
     {
-        private readonly ApplicationContext dbContext;
+        private readonly ApplicationDbContext dbContext;
 
-        public PostService(ApplicationContext dbContext)
+        public PostService(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -21,6 +22,11 @@ namespace Supp.Core.Posts
             post.Id = 0;
             dbContext.Add(post);
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Post>> GetAllAsync()
+        {
+            return await dbContext.Posts.ToListAsync();
         }
 
         public async Task<Post> GetPostAsync(int postId)
@@ -33,7 +39,7 @@ namespace Supp.Core.Posts
             if (post.Archived)
                 throw new InvalidOperationException("Cannot edit archived post.");
 
-            dbContext.Attach(post);
+            dbContext.Attach(post).State = EntityState.Modified;
             await dbContext.SaveChangesAsync();
         }
 

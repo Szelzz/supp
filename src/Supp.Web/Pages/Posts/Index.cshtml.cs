@@ -10,18 +10,18 @@ namespace Supp.Web.Pages.Posts
 {
     public class ListModel : PageModel
     {
-        private readonly IPostRepository postRepository;
+        private readonly PostService postServce;
 
-        public ListModel(IPostRepository postRepository)
+        public ListModel(PostService postServce)
         {
-            this.postRepository = postRepository;
+            this.postServce = postServce;
         }
 
         public IEnumerable<Post> Posts { get; set; }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            Posts = postRepository.GetAll();
+            Posts = await postServce.GetAllAsync();
         }
     }
 }

@@ -1,0 +1,21 @@
+﻿@page
+@model Supp.Web.Pages.Home.LoggedModel
+@{
+}
+
+<h3>Projekty</h3>
+@if (Model.Projects.Any())
+{
+    <a asp-page="/Projects/Create">Utwórz projekt</a>
+}
+@if (Model.Projects.Count == 0)
+{
+    <div><a asp-page="/Projects/Create">Utwórz pierwszy projekt</a></div>
+}
+
+@foreach (var project in Model.Projects)
+{
+    <div>
+        @project.Name
+    </div>
+}

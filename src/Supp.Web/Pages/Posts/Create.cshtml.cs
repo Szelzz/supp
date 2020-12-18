@@ -10,9 +10,9 @@ namespace Supp.Web.Pages.Posts
 {
     public class CreateModel : PageModel
     {
-        private readonly IPostRepository postRepository;
+        private readonly PostService postRepository;
 
-        public CreateModel(IPostRepository postRepository)
+        public CreateModel(PostService postRepository)
         {
             this.postRepository = postRepository;
         }
@@ -20,12 +20,12 @@ namespace Supp.Web.Pages.Posts
         [BindProperty]
         public Post Post { get; set; }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
                 return Page();
 
-            postRepository.Create(Post);
+            await postRepository.CreatePostAsync(Post);
             return RedirectToPage("Get", new { id = Post.Id });
         }
     }

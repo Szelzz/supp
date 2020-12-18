@@ -10,7 +10,12 @@ namespace Supp.Core.Projects
     public class Project
     {
         public int Id { get; set; }
+        public bool Archived { get; set; }
+        public string Name { get; set; }
         public List<Post> Posts { get; set; }
             = new List<Post>();
+
+        public int ProjectOptionsId { get; set; }
+        public ProjectOptions ProjectOptions { get; set; } 
     }
 }
