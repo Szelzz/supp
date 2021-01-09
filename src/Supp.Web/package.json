@@ -2,8 +2,26 @@
   "version": "1.0.0",
   "name": "asp.net",
   "private": true,
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.0.1",
+    "sass": "^1.32.2",
+    "sass-loader": "^10.1.0",
+    "style-loader": "^2.0.0",
+    "vue-loader": "^15.9.6",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^5.12.2",
+    "webpack-cli": "^4.3.1"
+  },
   "dependencies": {
-    "milligram": "1.4.1"
+    "milligram": "1.4.1",
+    "vue": "^2.6.12"
+  },
+  "scripts": {
+    "build": "webpack --mode=development",
+    "build:Release": "webpack --mode=production",
+    "build:Debug": "webpack --mode=development"
   }
 }
