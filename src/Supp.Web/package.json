@@ -13,7 +13,8 @@
     "vue-loader": "^15.9.6",
     "vue-template-compiler": "^2.6.12",
     "webpack": "^5.12.2",
-    "webpack-cli": "^4.3.1"
+    "webpack-cli": "^4.3.1",
+    "webpack-dev-server": "^3.11.1"
   },
   "dependencies": {
     "milligram": "1.4.1",
@@ -22,6 +23,7 @@
   "scripts": {
     "build": "webpack --mode=development",
     "build:Release": "webpack --mode=production",
-    "build:Debug": "webpack --mode=development"
+    "build:Debug": "webpack --mode=development",
+    "watch": "webpack serve --hot"
   }
 }

@@ -8,20 +8,28 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'wwwroot/js'),
     },
+    devServer: {
+        contentBase: './wwwroot/js',
+        port: 8071,
+        hot: true,
+        https: true,
+        disableHostCheck: true,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+        }
+    },
     module: {
         rules: [
             {
                 test: /\.vue$/,
                 loader: 'vue-loader'
             },
-            // this will apply to both plain `.js` files
-            // AND `<script>` blocks in `.vue` files
             {
                 test: /\.js$/,
                 loader: 'babel-loader'
             },
-            // this will apply to both plain `.css` files
-            // AND `<style>` blocks in `.vue` files
             {
                 test: /\.s?[ac]ss$/,
                 use: [
@@ -41,7 +49,6 @@ module.exports = {
         ]
     },
     plugins: [
-        // make sure to include the plugin for the magic
         new VueLoaderPlugin()
     ]
 }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -22,8 +22,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Styles\" />
     <Folder Include="wwwroot\css\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- extends watching group to include *.js files -->
+    <Watch Include="**\*.js" Exclude="node_modules\**\*;**\*.js.map;obj\**\*;bin\**\*;**\bundle.js" />
+    <Watch Include="**\*.vue" Exclude="node_modules\**\*;" />
+    <Watch Include="**\*.css" Exclude="node_modules\**\*;" />
+    <Watch Include="**\*.scss" Exclude="node_modules\**\*;" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
