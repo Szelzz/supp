@@ -1,8 +1,20 @@
 ﻿.header {
     background-color: #fdb140;
+    height: 5.5rem;
 }
 
 .header .logo > img {
-    margin: 5px 10px;
-    height: 50px;
+
+    height: 5rem;
+}
+
+.header a {
+    color: #000;
+    font-size: 1.2em;
+    line-height: 5.5rem;
+}
+
+.header .right {
+    float: right;
+    display: inline-block;
 }

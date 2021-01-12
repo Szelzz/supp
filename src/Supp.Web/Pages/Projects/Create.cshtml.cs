@@ -20,10 +20,11 @@ namespace Supp.Web.Pages.Projects
         [BindProperty]
         public Project Project { get; set; }
 
-        public async Task OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             Project.ProjectOptions = new ProjectOptions();
             await projectService.CreateAsync(Project);
+            return RedirectToPage("Get", new { id = Project.Id });
         }
     }
 }

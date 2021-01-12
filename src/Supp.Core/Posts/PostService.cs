@@ -29,6 +29,12 @@ namespace Supp.Core.Posts
             return await dbContext.Posts.ToListAsync();
         }
 
+        public async Task<IEnumerable<Post>> GetForProjectAsync(int projectId)
+        {
+            return await dbContext.Posts.Where(p => p.ProjectId == projectId)
+                .ToListAsync();
+        }
+
         public async Task<Post> GetPostAsync(int postId)
         {
             return await dbContext.Posts.FindAsync(postId);

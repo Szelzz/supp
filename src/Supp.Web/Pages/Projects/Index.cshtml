@@ -1,0 +1,20 @@
+﻿@page
+@model Supp.Web.Pages.Projects.IndexModel
+
+<h2>
+    Twoje projekty
+    @if (Model.Projects.Count > 0)
+    {
+        <a asp-page="./Create" class="button button-outline float-right">Dodaj nowy projekt</a>
+    }
+</h2>
+@if (Model.Projects.Count == 0)
+{
+    <a asp-page="./Create" class="button button-outline float-right">Dodaj nowy projekt</a>
+}
+@foreach (var project in Model.Projects)
+{
+    <div>
+        <h4><a asp-page="/Posts/Index" asp-route-projectId="@project.Id">@project.Name</a></h4>
+    </div>
+}
