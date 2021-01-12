@@ -29,6 +29,14 @@ namespace Supp.Core.Posts
             return await dbContext.Posts.ToListAsync();
         }
 
+        public async Task AddCommentAsync(int postId, Comment comment)
+        {
+            comment.CreateTime = DateTime.Now;
+            comment.PostId = postId;
+            dbContext.Add(comment);
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<Post>> GetForProjectAsync(int projectId)
         {
             return await dbContext.Posts.Where(p => p.ProjectId == projectId)
@@ -37,7 +45,8 @@ namespace Supp.Core.Posts
 
         public async Task<Post> GetPostAsync(int postId)
         {
-            return await dbContext.Posts.FindAsync(postId);
+            return await dbContext.Posts.Include(p => p.Comments).
+                FirstOrDefaultAsync(p => p.Id == postId);
         }
 
         public async Task Edit(Post post)

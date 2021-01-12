@@ -23,5 +23,12 @@ namespace Supp.Web.Pages.Posts
         {
             Post = await postService.GetPostAsync(id);
         }
+
+        public async Task<IActionResult> OnPostComment(int postId, Comment comment)
+        {
+            comment.Id = 0;
+            await postService.AddCommentAsync(postId, comment);
+            return RedirectToPage("Get", new { id = postId });
+        }
     }
 }

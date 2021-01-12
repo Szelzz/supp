@@ -18,10 +18,17 @@ namespace Supp.Web.Pages.Posts
         }
 
         [BindProperty]
-        public Post Post { get; set; }
+        public Post Post { get; set; } = new Post();
 
-        public async Task<IActionResult> OnPostAsync()
+        public void OnGet(int projectId)
         {
+            Post.ProjectId = projectId;
+        }
+
+        public async Task<IActionResult> OnPostAsync(int projectId)
+        {
+            Post.ProjectId = projectId;
+
             if (!ModelState.IsValid)
                 return Page();
 

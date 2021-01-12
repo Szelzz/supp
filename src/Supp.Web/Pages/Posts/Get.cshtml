@@ -4,3 +4,22 @@
 }
 <h2>@Model.Post.Title</h2>
 <p>@Model.Post.Body</p>
+
+<h4>Komentarze</h4>
+
+<form asp-page-handler="Comment" method="post">
+    <input type="hidden" name="postId" value="@Model.Post.Id" />
+    <textarea name="Body"></textarea>
+    <button type="submit">Dodaj</button>
+</form>
+@if (Model.Post.Comments.Count == 0)
+{
+    <div class="no-data">Brak komentarzy</div>
+}
+@foreach (var comment in Model.Post.Comments.OrderByDescending(c=>c.CreateTime))
+{
+    <div>
+        <div class="fade">@comment.CreateTime</div>
+        @comment.Body
+    </div>
+}

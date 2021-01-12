@@ -18,9 +18,11 @@ namespace Supp.Web.Pages.Posts
         }
 
         public IEnumerable<Post> Posts { get; set; }
+        public int ProjectId { get; set; }
 
         public async Task OnGetAsync(int projectId)
         {
+            ProjectId = projectId;
             Posts = await postServce.GetForProjectAsync(projectId);
         }
     }

@@ -19,6 +19,9 @@ namespace Supp.Core.Posts
         public List<PostRelation> Children { get; set; }
             = new List<PostRelation>();
 
+        public List<Comment> Comments { get; set; }
+            = new List<Comment>();
+
         public int ProjectId { get; set; }
         public Project Project { get; set; }
 
