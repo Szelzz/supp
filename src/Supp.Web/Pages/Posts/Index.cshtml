@@ -3,7 +3,28 @@
 @{
 }
 <a asp-page="./Create" asp-route-projectId="@Model.ProjectId">Dodaj nowy</a>
-@foreach (var post in Model.Posts)
-{
-    <h2><a asp-page="./Get" asp-route-id="@post.Id">@post.Title</a></h2>
-}
+<table class="details-table">
+    <thead>
+        <tr>
+            <th class="no-stretch">Typ</th>
+            <th class="no-stretch">Priorytet</th>
+            <th class="no-stretch">Status</th>
+            <th>Skrót</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var post in Model.Posts)
+        {
+            <tr data-post-id="@post.Id">
+                <td>@Html.PostTypeToIcon(post.Type)</td>
+                <td>@Html.PostPriorityToIcon(post.Priority)</td>
+                <td>@post.Status</td>
+                <td>
+                    <a asp-page="./Get" asp-route-id="@post.Id">@post.Title</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

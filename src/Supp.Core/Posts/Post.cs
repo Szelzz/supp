@@ -12,6 +12,12 @@ namespace Supp.Core.Posts
             = DateTimeOffset.Now;
         public string Title { get; set; }
         public string Body { get; set; }
+        public int ProjectId { get; set; }
+        public Project Project { get; set; }
+
+        public PostType Type { get; set; }
+        public PostStatus Status { get; set; }
+        public PostPriority Priority { get; set; }
 
         public List<PostRelation> Parents { get; set; }
             = new List<PostRelation>();
@@ -21,11 +27,5 @@ namespace Supp.Core.Posts
 
         public List<Comment> Comments { get; set; }
             = new List<Comment>();
-
-        public int ProjectId { get; set; }
-        public Project Project { get; set; }
-
-        public bool Archived { get; set; }
-
     }
 }

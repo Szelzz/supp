@@ -33,6 +33,10 @@
     <Watch Include="**\*.scss" Exclude="node_modules\**\*;" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Watch Remove="Styles\tables.scss" />
+  </ItemGroup>
+
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="npm run build:$(ConfigurationName) --prefix $(ProjectDir)" />
   </Target>

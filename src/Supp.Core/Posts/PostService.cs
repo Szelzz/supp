@@ -51,7 +51,7 @@ namespace Supp.Core.Posts
 
         public async Task Edit(Post post)
         {
-            if (post.Archived)
+            if (post.Status == PostStatus.Removed)
                 throw new InvalidOperationException("Cannot edit archived post.");
 
             dbContext.Attach(post).State = EntityState.Modified;
@@ -60,7 +60,7 @@ namespace Supp.Core.Posts
 
         public async Task ArchivePost(Post post)
         {
-            post.Archived = true;
+            post.Status = PostStatus.Removed;
             dbContext.Attach(post);
             await dbContext.SaveChangesAsync();
         }
@@ -81,7 +81,7 @@ namespace Supp.Core.Posts
                 if (source == null)
                     continue;
 
-                source.Archived = true;
+                source.Status = PostStatus.Removed;
                 sources.Add(source);
                 var relation = new PostRelation(sourceId, post.Id);
                 dbContext.PostRelations.Add(relation);
@@ -97,7 +97,7 @@ namespace Supp.Core.Posts
             if (source == null)
                 throw new InvalidOperationException("Source doesn't exists");
 
-            source.Archived = true;
+            source.Status = PostStatus.Removed;
 
             using var transaction = dbContext.Database.BeginTransaction();
             foreach (var post in posts)
