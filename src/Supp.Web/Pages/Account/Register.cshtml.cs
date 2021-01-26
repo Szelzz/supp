@@ -20,7 +20,9 @@ namespace Supp.Web.Pages.Account
             this.signInManager = signInManager;
         }
 
+        [BindProperty]
         public string Username { get; set; }
+        [BindProperty]
         public string Password { get; set; }
 
         public void OnGet()
@@ -34,7 +36,7 @@ namespace Supp.Web.Pages.Account
             {
                 var user = new User
                 {
-                    Username = Username
+                    UserName = Username
                 };
                 var result = await userManager.CreateAsync(user, Password);
                 if (result.Succeeded)

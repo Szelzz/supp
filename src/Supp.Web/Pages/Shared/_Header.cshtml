@@ -5,6 +5,10 @@
         </a>
         <div class="right">
             <a asp-page="/Projects/Index">Projekty</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a>@User.Identity.Name</a>
+            }
         </div>
     </div>
 </div>

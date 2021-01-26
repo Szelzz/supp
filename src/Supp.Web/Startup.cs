@@ -24,9 +24,9 @@ namespace Supp.Web
             services.AddRouting(o => { o.LowercaseUrls = true; o.LowercaseQueryStrings = true; });
             services.AddRazorPages();
 
-            //services.AddIdentity<User, IdentityRole>()
-            //    .AddEntityFrameworkStores<ApplicationContext>()
-            //    .AddDefaultTokenProviders();
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             //services.AddScoped<IUserClaimsPrincipalFactory<User>,
             //    AdditionalUserClaimsPrincipalFactory>();
@@ -48,7 +48,7 @@ namespace Supp.Web
 
                 // User settings.
                 options.User.AllowedUserNameCharacters =
-                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._+";
                 options.User.RequireUniqueEmail = false;
             });
 
@@ -73,7 +73,9 @@ namespace Supp.Web
             }
 
             app.UseRouting();
+
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
