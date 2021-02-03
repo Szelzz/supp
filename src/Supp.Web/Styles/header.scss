@@ -1,17 +1,18 @@
 ﻿.header {
     background-color: #fdb140;
-    height: 5.5rem;
+    height: 6rem;
 }
 
 .header .logo > img {
-
     height: 5rem;
 }
 
 .header a {
+    font-size: 0.8rem;
     color: #000;
     font-size: 1.2em;
-    line-height: 5.5rem;
+    line-height: 6rem;
+    margin-left: 0.3em;
 }
 
 .header .right {

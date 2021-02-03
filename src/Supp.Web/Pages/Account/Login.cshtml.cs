@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -20,8 +21,12 @@ namespace Supp.Web.Pages.Account
         }
 
         [BindProperty]
+        [Required]
         public string UserName { get; set; }
+
+        [DataType(DataType.Password)]
         [BindProperty]
+        [Required]
         public string Password { get; set; }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -31,13 +36,14 @@ namespace Supp.Web.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
             if (!ModelState.IsValid)
                 return Page();
 
             var result = await signInManager.PasswordSignInAsync(UserName, Password, isPersistent: true, lockoutOnFailure: false);
             if (result.Succeeded)
             {
+                if (returnUrl == null)
+                    return RedirectToPage("/Projects/Index");
                 return LocalRedirect(returnUrl);
             }
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
