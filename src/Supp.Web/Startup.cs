@@ -1,14 +1,18 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Supp.Core.Authorization;
 using Supp.Core.Data.EF;
 using Supp.Core.Posts;
 using Supp.Core.Projects;
 using Supp.Core.Users;
+using Supp.Web.Security;
 using System;
+using System.Security.Claims;
 
 namespace Supp.Web
 {
@@ -18,18 +22,27 @@ namespace Supp.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // App services
             services.AddScoped<PostService>();
             services.AddScoped<ProjectService>();
             services.AddScoped<ApplicationDbContext>();
+            services.AddScoped<ProjectAuthorizationService>();
+
+            // Security
+            services.AddScoped<AppAuthorizationService>();
+            services.AddAuthorization();
+            services.AddScoped<IAuthorizationHandler, ProjectAuthorizationHandler>();
+
+            // Asp specific
             services.AddRouting(o => { o.LowercaseUrls = true; o.LowercaseQueryStrings = true; });
             services.AddRazorPages();
+            services.AddHttpContextAccessor();
+            services.AddTransient(f => f.GetService<IHttpContextAccessor>().HttpContext.User);
 
+            // Identity
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
-            //services.AddScoped<IUserClaimsPrincipalFactory<User>,
-            //    AdditionalUserClaimsPrincipalFactory>();
 
             services.Configure<IdentityOptions>(options =>
             {

@@ -12,7 +12,7 @@
       "executablePath": "dotnet.exe",
       "workingDirectory": "$(ProjectDir)",
       "commandLineArgs": "watch run",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "https://localhost:8070/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

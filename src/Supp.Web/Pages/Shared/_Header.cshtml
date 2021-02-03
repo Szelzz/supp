@@ -4,9 +4,9 @@
             <img src="~/img/logo.png" />
         </a>
         <div class="right">
-            <a asp-page="/Projects/Index">Projekty</a>
             @if (User.Identity.IsAuthenticated)
             {
+                <a asp-page="/Projects/Index">Projekty</a>
                 <a>@User.Identity.Name</a>
             }
             else

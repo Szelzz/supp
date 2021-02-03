@@ -1,8 +1,8 @@
-﻿namespace Supp.Core.Users
+﻿namespace Supp.Core.Projects
 {
     public enum ProjectRoleType
     {
-        Owner,
+        Owner = 1,
         Contributor,
     }
 }

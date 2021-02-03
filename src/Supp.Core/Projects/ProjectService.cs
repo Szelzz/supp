@@ -38,6 +38,12 @@ namespace Supp.Core.Projects
             await dbContext.SaveChangesAsync();
         }
 
+        public Project GetWithPosts(int projectId)
+        {
+            return dbContext.Projects.Include(p => p.Posts)
+                .FirstOrDefault(p => p.Id == projectId);
+        }
+
         public async Task Archive(Project project)
         {
             project.Archived = true;
