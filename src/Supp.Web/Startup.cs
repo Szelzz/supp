@@ -10,6 +10,7 @@ using Supp.Core.Data.EF;
 using Supp.Core.Posts;
 using Supp.Core.Projects;
 using Supp.Core.Users;
+using Supp.Web.Infrastructure.DependencyInjection;
 using Supp.Web.Security;
 using System;
 using System.Security.Claims;
@@ -26,12 +27,13 @@ namespace Supp.Web
             services.AddScoped<PostService>();
             services.AddScoped<ProjectService>();
             services.AddScoped<ApplicationDbContext>();
-            services.AddScoped<ProjectAuthorizationService>();
+            services.AddScoped<PermissionAuthorizationService>();
 
             // Security
             services.AddScoped<AppAuthorizationService>();
             services.AddAuthorization();
-            services.AddScoped<IAuthorizationHandler, ProjectAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, ResourceAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
             // Asp specific
             services.AddRouting(o => { o.LowercaseUrls = true; o.LowercaseQueryStrings = true; });
@@ -40,7 +42,8 @@ namespace Supp.Web
             services.AddTransient(f => f.GetService<IHttpContextAccessor>().HttpContext.User);
 
             // Identity
-            services.AddIdentity<User, IdentityRole>()
+            services.AddScoped<IUserClaimsPrincipalFactory<User>, ClaimFactory>();
+            services.AddIdentityWithoutRoles<User>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 

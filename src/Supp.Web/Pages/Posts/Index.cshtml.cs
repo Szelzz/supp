@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Supp.Core.Authorization;
 using Supp.Core.Posts;
 using Supp.Core.Projects;
 using Supp.Web.Security;
@@ -31,7 +32,7 @@ namespace Supp.Web.Pages.Posts
         {
             ProjectId = projectId;
             var project = projectService.GetWithPosts(ProjectId);
-            var result = await authorizationService.AuthorizeProjectAsync(project, Core.Authorization.ProjectOperation.Read);
+            var result = await authorizationService.AuthorizePermissionAsync(Permission.ProjectCanRead, project);
             if (!result.Succeeded)
                 return new ForbidResult();
 

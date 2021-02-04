@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Supp.Core.Authorization
 {
-    public enum ProjectOperation
+    public interface IResource
     {
-        Read,
-        Edit
+        int Id { get; }
     }
 }

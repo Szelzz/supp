@@ -21,9 +21,14 @@ namespace Supp.Web.Security
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        public Task<AuthorizationResult> AuthorizeProjectAsync(Project project, ProjectOperation projectOperation)
+        public Task<AuthorizationResult> AuthorizePermissionAsync(Permission permission)
         {
-            return authorizationService.AuthorizeAsync(httpContextAccessor.HttpContext.User, project, new ProjectAuthorizationRequirement(projectOperation));
+            return authorizationService.AuthorizeAsync(httpContextAccessor.HttpContext.User, PermissionAuthorizationHandler.Resource, new PermissionAuthorizationRequirement(permission));
+        }
+
+        public Task<AuthorizationResult> AuthorizePermissionAsync(Permission permission, IResource resource)
+        {
+            return authorizationService.AuthorizeAsync(httpContextAccessor.HttpContext.User, resource, new PermissionAuthorizationRequirement(permission));
         }
     }
 }

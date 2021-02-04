@@ -27,6 +27,7 @@ namespace Supp.Core.Data.EF
         public DbSet<PostRelation> PostRelations { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectOptions> ProjectOptions { get; set; }
+        public new DbSet<UserRole> UserRoles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -38,7 +39,6 @@ namespace Supp.Core.Data.EF
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>()
-                .Ignore(u => u.ProjectRole)
                 .ToTable("Users");
 
             modelBuilder.Entity<Post>()
@@ -51,12 +51,19 @@ namespace Supp.Core.Data.EF
                 .WithOne(r => r.Child)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<UserRole>()
+                .HasOne(r => r.User)
+                .WithMany(u => u.Roles)
+                .HasForeignKey(r => r.UserId)
+                .IsRequired();
+
             // Asp Identity
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");
             modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
             modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
             modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
-            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
+            modelBuilder.Ignore<IdentityUserRole<string>>();
+            //.ToTable("delete_UserRoles");
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
         }
     }

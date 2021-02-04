@@ -1,4 +1,5 @@
-﻿using Supp.Core.Posts;
+﻿using Supp.Core.Authorization;
+using Supp.Core.Posts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Supp.Core.Projects
 {
-    public class Project
+    public class Project : IResource
     {
         public int Id { get; set; }
         public bool Archived { get; set; }
