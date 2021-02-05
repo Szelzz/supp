@@ -1,16 +1,46 @@
-﻿.pricelist .column {
+﻿.pricelist {
+}
+
+.pricelist .column {
+    border-radius: 4px;
+    margin: 0 10px;
     background-color: #fff;
 }
 
-.pricelist .content{
-    height: 100%;
+.pricelist .content {
+    padding: 20px 10px 0;
+    height: 400px;
+    position: relative;
+}
+
+.pricelist .column.best {
+    box-shadow: 0 0 20px rgba(10,0,0,0.5);
+    position: relative;
+    top: -20px;
+}
+
+
+.pricelist h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.pricelist h3 {
+    text-align: center;
+}
+
+.pricelist .buy {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
 .pricelist ul {
+    list-style: none;
     margin-left: 10px;
 }
-
-
 
 .pricelist .highlight {
     font-weight: bold;

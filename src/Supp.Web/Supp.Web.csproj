@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Watch Remove="Styles\footer.scss" />
     <Watch Remove="Styles\login.scss" />
     <Watch Remove="Styles\pricelist.css" />
     <Watch Remove="Styles\pricelist.scss" />
