@@ -1,5 +1,7 @@
-﻿.header {
-    background-color: #fdb140;
+﻿@use 'colors.scss' as *;
+
+.header {
+    background-color: $primary-color;
     height: 6rem;
 }
 
@@ -12,7 +14,7 @@
     color: #000;
     font-size: 1.2em;
     line-height: 6rem;
-    margin-left: 0.3em;
+    margin-left: 0.5em;
 }
 
 .header .right {

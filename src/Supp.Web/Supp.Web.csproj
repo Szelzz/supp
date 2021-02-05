@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Content Include="Scripts\main.vue" />
-    <Content Include="Styles\pricelist.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,13 +34,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Styles\pricelist.css" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Watch Remove="Styles\Cards.scss" />
+    <Watch Remove="Styles\colors.scss" />
     <Watch Remove="Styles\footer.scss" />
     <Watch Remove="Styles\login.scss" />
-    <Watch Remove="Styles\pricelist.css" />
     <Watch Remove="Styles\pricelist.scss" />
     <Watch Remove="Styles\tables.scss" />
   </ItemGroup>

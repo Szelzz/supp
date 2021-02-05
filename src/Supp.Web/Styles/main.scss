@@ -1,15 +1,19 @@
-﻿@use 'header.scss';
+﻿@use 'colors.scss';
+
+@use 'header.scss';
+@use 'footer.scss';
 @use 'tables.scss';
 @use 'pricelist.scss';
 @use 'login.scss';
-@use 'footer.scss';
+@use 'cards.scss';
 
 body, html {
     margin: 0;
 }
- 
+
 body {
     background-color: #fffcf0;
+    color: #393f44;
 }
 
 .main {

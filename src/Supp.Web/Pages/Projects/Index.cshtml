@@ -12,9 +12,21 @@
 {
     <a asp-page="./Create" class="button button-outline float-right">Dodaj nowy projekt</a>
 }
-@foreach (var project in Model.Projects)
-{
-    <div>
-        <h4><a asp-page="/Posts/Index" asp-route-projectId="@project.Id">@project.Name</a></h4>
-    </div>
-}
+<div class="cards">
+
+    @foreach (var project in Model.Projects)
+    {
+        <a class="card" asp-page="/Posts/Index" asp-route-projectId="@project.Id">
+            @project.Name
+        </a>
+
+        <a class="card" asp-page="/Posts/Index" asp-route-projectId="@project.Id">
+            @project.Name
+        </a>
+
+        <a class="card" asp-page="/Posts/Index" asp-route-projectId="@project.Id">
+            @project.Name
+        </a>
+    }
+
+</div>

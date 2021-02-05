@@ -2,14 +2,14 @@
 @model Supp.Web.Pages.Posts.ListModel
 @{
 }
-<a asp-page="./Create" asp-route-projectId="@Model.ProjectId">Dodaj nowy</a>
+<a asp-page="./Create" asp-route-projectId="@Model.ProjectId" class="button button-outline">Dodaj nowy</a>
 <table class="details-table">
     <thead>
         <tr>
             <th class="no-stretch">Typ</th>
             <th class="no-stretch">Priorytet</th>
             <th class="no-stretch">Status</th>
-            <th>Skrót</th>
+            <th>Opis</th>
         </tr>
     </thead>
 
