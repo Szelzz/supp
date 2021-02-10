@@ -34,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Watch Remove="Scripts\Components\EditButton.vue" />
     <Watch Remove="Styles\Cards.scss" />
     <Watch Remove="Styles\colors.scss" />
     <Watch Remove="Styles\footer.scss" />

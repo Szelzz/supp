@@ -20,6 +20,11 @@ module.exports = {
             "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
         }
     },
+    resolve: {
+        alias: {
+            'vue$': 'vue/dist/vue.esm.js'
+        }
+    },
     module: {
         rules: [
             {

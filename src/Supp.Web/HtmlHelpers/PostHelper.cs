@@ -11,9 +11,9 @@ namespace Supp.Web.HtmlHelpers
         {
             return postType switch
             {
-                PostType.Error => new HtmlString("error-type-icon"),
-                PostType.Enhancement => new HtmlString("enhancement-type-icon"),
-                PostType.Task => new HtmlString("task-type-icon"),
+                PostType.Error => new HtmlString("<i class=\"fas fa-bug\"></i>"),
+                PostType.Enhancement => new HtmlString("<i class=\"fas fa-angle-double-up\"></i>"),
+                PostType.Task => new HtmlString("<i class=\"fas fa-clipboard-check\"></i>"),
                 _ => new HtmlString(null),
             };
         }
@@ -22,10 +22,10 @@ namespace Supp.Web.HtmlHelpers
         {
             return postPriority switch
             {
-                PostPriority.Unset => new HtmlString("unset-icon"),
-                PostPriority.Unimportant => new HtmlString("unimportant-icon"),
-                PostPriority.Normal => new HtmlString("normal-icon"),
-                PostPriority.Important => new HtmlString("important-icon"),
+                PostPriority.Unset => new HtmlString("<i class=\"far fa-square\"></i>"),
+                PostPriority.Unimportant => new HtmlString("<i class=\"fas fa-arrow-down\"></i>"),
+                PostPriority.Normal => new HtmlString("<i class=\"fas fa-check\"></i>"),
+                PostPriority.Important => new HtmlString("<i class=\"fas fa-clipboard-exclamation\"></i>"),
                 _ => new HtmlString(null),
             };
         }

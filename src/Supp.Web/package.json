@@ -8,6 +8,7 @@
     "babel-loader": "^8.2.2",
     "css-loader": "^5.0.1",
     "sass": "^1.32.2",
+    "postcss": "^8.1.0",
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0",
     "vue-loader": "^15.9.6",

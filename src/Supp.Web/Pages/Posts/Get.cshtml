@@ -2,8 +2,18 @@
 @model Supp.Web.Pages.Posts.GetModel
 @{
 }
-<h2>@Model.Post.Title</h2>
-<p>@Model.Post.Body</p>
+
+<div>
+    @Html.PostTypeToIcon(Model.Post.Type) | @Html.PostPriorityToIcon(Model.Post.Priority)
+</div>
+<h2>
+    <edit-button></edit-button>
+    @Model.Post.Title
+</h2>
+<p>
+    <edit-button></edit-button>
+    @Model.Post.Body
+</p>
 
 <h4>Komentarze</h4>
 
@@ -16,7 +26,7 @@
 {
     <div class="no-data">Brak komentarzy</div>
 }
-@foreach (var comment in Model.Post.Comments.OrderByDescending(c=>c.CreateTime))
+@foreach (var comment in Model.Post.Comments.OrderByDescending(c => c.CreateTime))
 {
     <div>
         <div class="fade">@comment.CreateTime</div>

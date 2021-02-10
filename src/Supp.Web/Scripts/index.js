@@ -3,10 +3,10 @@ import '../Styles/main.scss'
 import Vue from 'vue'
 import App from './main.vue'
 
-Vue.config.productionTip = false
+//Vue.config.productionTip = true
 
-/* eslint-disable no-new */
-new Vue(App).$mount('#app')
+
+new Vue(App);
 
 
 console.log('test')
