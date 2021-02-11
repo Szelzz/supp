@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Supp.Core;
 using Supp.Core.Authorization;
 using Supp.Core.Data.EF;
 using Supp.Core.Posts;
@@ -28,6 +29,7 @@ namespace Supp.Web
             services.AddScoped<ProjectService>();
             services.AddScoped<ApplicationDbContext>();
             services.AddScoped<PermissionAuthorizationService>();
+            services.AddScoped<UniversalModelModifier>();
 
             // Security
             services.AddScoped<AppAuthorizationService>();

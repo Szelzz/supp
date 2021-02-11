@@ -4,17 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Supp.Core;
 using Supp.Core.Posts;
+using Supp.Web.Security;
 
 namespace Supp.Web.Pages.Posts
 {
+    [IgnoreAntiforgeryToken(Order = 2000)] // Temporary
     public class GetModel : PageModel
     {
         private readonly PostService postService;
+        private readonly AppAuthorizationService authorizationService;
 
-        public GetModel(PostService postService)
+        public GetModel(PostService postService, AppAuthorizationService authorizationService)
         {
             this.postService = postService;
+            this.authorizationService = authorizationService;
         }
 
         public Post Post { get; set; }
@@ -29,6 +34,20 @@ namespace Supp.Web.Pages.Posts
             comment.Id = 0;
             await postService.AddCommentAsync(postId, comment);
             return RedirectToPage("Get", new { id = postId });
+        }
+
+        public async Task<IActionResult> OnPostEdit(int modelId, string propertyName, string value)
+        {
+            var post = await postService.GetPostAsync(modelId);
+            if (post == null)
+                return NotFound();
+
+            var modelModifier = new UniversalModelModifier();
+            var result = modelModifier.SetValue(post, propertyName, value);
+            if (!result.Succeeded)
+                return BadRequest();
+
+            return new JsonResult(value);
         }
     }
 }

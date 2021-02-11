@@ -24,6 +24,11 @@ body {
     height: 100%;
     display: grid;
 }
+
 .center-inside > * {
     margin: auto;
+}
+
+.edit-control {
+    display: none;
 }
