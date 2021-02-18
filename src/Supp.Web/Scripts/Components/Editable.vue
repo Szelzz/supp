@@ -1,13 +1,22 @@
 ﻿<template>
     <span style="display:block">
         <span id="title-display" v-show="!editMode">{{ value }}</span>
-        <input type="text" class="editable-input" v-show="editMode" v-model="value" />
 
-        <span class="float-right">
-            <button @click="edit" v-show="!editMode" class="icon-button">
+        <!-- edit template -->
+        <input type="text" class="form-control editable-input"
+               v-if="template == 'text'"
+               v-show="editMode"
+               v-model="value" />
+        <textarea class="form-control editable-input"
+                  v-if="template == 'textarea'"
+                  v-model="value"
+                  v-show="editMode"></textarea>
+
+        <span class="float-end">
+            <button @click="edit" v-show="!editMode" class="btn btn-sm btn-outline-dark">
                 <i class="fas fa-pen-square"></i>
             </button>
-            <button @click="save" v-show="editMode" class="btn btn-sm">
+            <button @click="save" v-show="editMode" class="btn btn-sm btn-outline-dark">
                 <i class="fas fa-save"></i>
             </button>
         </span>
@@ -22,6 +31,10 @@
             'propertyName': String,
             'modelId': Number,
             'modelValue': String,
+            'template': {
+                type: String,
+                default: 'text'
+            }
         },
         data() {
             return {
@@ -31,8 +44,7 @@
                 editControl: null
             };
         },
-        init: {
-
+        init() {
         },
         methods: {
             getValue() {
@@ -52,7 +64,7 @@
                         body: this.dataToJson()
                     }
                 )
-                    .then(r=>r.json())
+                    .then(r => r.json())
                     .then(this.success)
             },
             success(response) {
@@ -74,5 +86,6 @@
 <style lang="scss">
     .editable-input {
         width: 90%;
+        display: inline-block;
     }
 </style>

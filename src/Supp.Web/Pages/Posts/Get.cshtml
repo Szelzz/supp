@@ -16,25 +16,29 @@
 
 
     @*<edit-button update-url="@Url.Page("Get", "Edit")"
-                 property-name="@nameof(Model.Post.Title)"
-                 model-id="@Model.Post.Id"
-                 model-value="@Model.Post.Title"
-                 display-control-id="title-display"
-                 edit-control-id="title-edit"></edit-button>
-    <span id="title-display">@Model.Post.Title</span>
-    <input type="text" value="@Model.Post.Title" id="title-edit" class="edit-control" />*@
+                     property-name="@nameof(Model.Post.Title)"
+                     model-id="@Model.Post.Id"
+                     model-value="@Model.Post.Title"
+                     display-control-id="title-display"
+                     edit-control-id="title-edit"></edit-button>
+        <span id="title-display">@Model.Post.Title</span>
+        <input type="text" value="@Model.Post.Title" id="title-edit" class="edit-control" />*@
 </h2>
-<p>
-    @*<edit-button></edit-button>*@
-    @Model.Post.Body
-</p>
+<div style="border:1px solid #e2e2e2;padding: 10px">
+    <editable update-url="@Url.Page("Get", "Edit")"
+              property-name="@nameof(Model.Post.Body)"
+              :model-id="@Model.Post.Id"
+              model-value="@Model.Post.Body"
+              template="textarea">
+    </editable>
+</div>
 
 <h4>Komentarze</h4>
 
 <form asp-page-handler="Comment" method="post">
     <input type="hidden" name="postId" value="@Model.Post.Id" />
-    <textarea name="Body"></textarea>
-    <button type="submit">Dodaj</button>
+    <textarea class="form-control" name="Body"></textarea>
+    <button class="btn btn-primary" type="submit">Dodaj</button>
 </form>
 @if (Model.Post.Comments.Count == 0)
 {
@@ -43,7 +47,7 @@
 @foreach (var comment in Model.Post.Comments.OrderByDescending(c => c.CreateTime))
 {
     <div>
-        <div class="fade">@comment.CreateTime</div>
+        <div class="text-secondary">@comment.CreateTime</div>
         @comment.Body
     </div>
 }
