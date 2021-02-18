@@ -1,11 +1,14 @@
 ﻿@use 'colors.scss';
 
+
 @use 'header.scss';
 @use 'footer.scss';
 @use 'tables.scss';
 @use 'pricelist.scss';
 @use 'login.scss';
 @use 'cards.scss';
+
+@import "~bootstrap/scss/bootstrap";
 
 body, html {
     margin: 0;
@@ -29,6 +32,38 @@ body {
     margin: auto;
 }
 
-.edit-control {
-    display: none;
+.button-black {
+    background-color: black;
+    border-color: black;
+}
+
+.button-black.button-clear,
+.button-black.button-outline {
+    background-color: transparent;
+    color: black;
+}
+
+.button-black.button-clear {
+    border-color: transparent;
+}
+
+.button-small {
+    font-size: .8rem;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    padding: 0 1.5rem;
+}
+
+.button-large {
+    font-size: 1.4rem;
+    height: 4.5rem;
+    line-height: 4.5rem;
+    padding: 0 2rem;
+}
+
+.icon-button {
+    background-color: transparent;
+    border: transparent;
+    color: #272727;
+    font-size: 1em;
 }

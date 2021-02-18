@@ -5,26 +5,26 @@
     Twoje projekty
     @if (Model.Projects.Count > 0)
     {
-        <a asp-page="./Create" class="button button-outline float-right">Dodaj nowy projekt</a>
+        <a asp-page="./Create" class="btn btn-outline float-end">Dodaj nowy projekt</a>
     }
 </h2>
 @if (Model.Projects.Count == 0)
 {
-    <a asp-page="./Create" class="button button-outline float-right">Dodaj nowy projekt</a>
+    <a asp-page="./Create" class="btn btn-outline float-end">Dodaj nowy projekt</a>
 }
-<div class="cards">
+<div class="row">
 
     @foreach (var project in Model.Projects)
     {
-        <a class="card" asp-page="/Posts/Index" asp-route-projectId="@project.Id">
+        <a class="col-3 card" asp-page="/Posts/Index" asp-route-projectId="@project.Id">
             @project.Name
         </a>
 
-        <a class="card" asp-page="/Posts/Index" asp-route-projectId="@project.Id">
+        <a class="col-3card" asp-page="/Posts/Index" asp-route-projectId="@project.Id">
             @project.Name
         </a>
 
-        <a class="card" asp-page="/Posts/Index" asp-route-projectId="@project.Id">
+        <a class="col-3 card" asp-page="/Posts/Index" asp-route-projectId="@project.Id">
             @project.Name
         </a>
     }

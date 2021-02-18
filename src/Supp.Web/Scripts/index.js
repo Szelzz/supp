@@ -1,4 +1,4 @@
-﻿import 'milligram/dist/milligram.css'
+﻿//import 'milligram/dist/milligram.css'
 import '../Styles/main.scss'
 import Vue from 'vue'
 import App from './main.vue'

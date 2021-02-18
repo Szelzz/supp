@@ -1,7 +1,7 @@
 ﻿.pricelist {
 }
 
-.pricelist .column {
+.pricelist .col {
     border-radius: 4px;
     margin: 0 20px;
     background-color: #fff;
@@ -14,7 +14,7 @@
     position: relative;
 }
 
-.pricelist .column.best {
+.pricelist .col.best {
     box-shadow: 0 0 20px rgba(10,0,0,0.5);
     position: relative;
     top: -20px;

@@ -1,18 +1,24 @@
-﻿<div class="header">
+﻿<div class="header navbar navbar-expand-sm navbar-light">
     <div class="container">
-        <a class="logo" href="/">
+        <a class="logo navbar-brand" href="/">
             <img src="~/img/logo.png" />
         </a>
-        <div class="right">
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse flex-row-reverse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
             @if (User.Identity.IsAuthenticated)
             {
-                <a asp-page="/Projects/Index">Projekty</a>
-                <a>@User.Identity.Name</a>
+                <a class="nav-link" asp-page="/Projects/Index">Projekty</a>
+                <a class="nav-link">@User.Identity.Name</a>
             }
             else
             {
-                <a asp-page="/Account/Login">Zaloguj się</a>
+                <a class="nav-link" asp-page="/Account/Login">Zaloguj się</a>
             }
+            </div>
         </div>
     </div>
 </div>
