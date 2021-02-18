@@ -1,10 +1,10 @@
 ﻿<script>
-    import EditButton from './Components/EditButton.vue'
+    import Editable from './Components/Editable.vue'
 
     export default {
         el: '#app',
         components: {
-            EditButton
+            Editable
         }
     }
 </script>

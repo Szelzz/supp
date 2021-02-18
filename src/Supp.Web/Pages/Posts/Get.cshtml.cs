@@ -36,18 +36,26 @@ namespace Supp.Web.Pages.Posts
             return RedirectToPage("Get", new { id = postId });
         }
 
-        public async Task<IActionResult> OnPostEdit(int modelId, string propertyName, string value)
+        public async Task<IActionResult> OnPostEdit([FromBody] EditModel model)
         {
-            var post = await postService.GetPostAsync(modelId);
+            var post = await postService.GetPostAsync(model.ModelId);
             if (post == null)
                 return NotFound();
 
             var modelModifier = new UniversalModelModifier();
-            var result = modelModifier.SetValue(post, propertyName, value);
+            var result = modelModifier.SetValue(post, model.PropertyName, model.Value);
             if (!result.Succeeded)
                 return BadRequest();
 
-            return new JsonResult(value);
+            await postService.Edit(post);
+            return new JsonResult(model.Value);
         }
+    }
+
+    public class EditModel
+    {
+        public int ModelId { get; set; }
+        public string PropertyName { get; set; }
+        public string Value { get; set; }
     }
 }
