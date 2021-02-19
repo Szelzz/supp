@@ -1,5 +1,6 @@
 ﻿using Supp.Core.Authorization;
 using Supp.Core.Posts;
+using Supp.Core.Tags;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,9 @@ namespace Supp.Core.Projects
             = new List<Post>();
 
         public int ProjectOptionsId { get; set; }
-        public ProjectOptions ProjectOptions { get; set; } 
+        public ProjectOptions ProjectOptions { get; set; }
+
+        public List<Tag> Tags { get; set; }
+            = new List<Tag>();
     }
 }

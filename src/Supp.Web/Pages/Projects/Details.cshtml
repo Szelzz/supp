@@ -1,0 +1,19 @@
+﻿@page
+@model Supp.Web.Pages.Projects.DetailsModel
+@{
+}
+<h2>
+    <editable update-url="@Url.Page("Details", "Edit")"
+              property-name="@nameof(Model.Project.Name)"
+              :model-id="@Model.Project.Id"
+              model-value="@Model.Project.Name">
+    </editable>
+</h2>
+<label>
+    Tagi
+</label>
+<editable update-url="@Url.Page("Details", "Edit")"
+          property-name="@nameof(Model.Project.Tags)"
+          :model-id="@Model.Project.Id"
+          model-value="@Model.ProjectTags">
+</editable>

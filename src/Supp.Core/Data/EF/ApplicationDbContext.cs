@@ -11,6 +11,7 @@ using Supp.Core.Projects;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Supp.Core.Users;
 using Microsoft.AspNetCore.Identity;
+using Supp.Core.Tags;
 
 namespace Supp.Core.Data.EF
 {
@@ -28,6 +29,7 @@ namespace Supp.Core.Data.EF
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectOptions> ProjectOptions { get; set; }
         public new DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -56,6 +58,12 @@ namespace Supp.Core.Data.EF
                 .WithMany(u => u.Roles)
                 .HasForeignKey(r => r.UserId)
                 .IsRequired();
+
+            modelBuilder.Entity<Tag>()
+                .HasOne(t => t.Project)
+                .WithMany(p => p.Tags)
+                .HasForeignKey(t => t.ProjectId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Asp Identity
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");

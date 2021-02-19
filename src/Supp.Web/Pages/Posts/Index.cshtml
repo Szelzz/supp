@@ -2,7 +2,8 @@
 @model Supp.Web.Pages.Posts.ListModel
 @{
 }
-<a asp-page="./Create" asp-route-projectId="@Model.ProjectId" class="button button-outline">Dodaj nowy</a>
+<a asp-page="./Create" asp-route-projectId="@Model.ProjectId" class="btn btn-outline-primary">Dodaj nowy</a>
+<a asp-page="../Projects/Details" asp-route-projectId="@Model.ProjectId" class="btn btn-outline-secondary">Szczegóły projektu</a>
 <table class="table details-table">
     <thead>
         <tr>

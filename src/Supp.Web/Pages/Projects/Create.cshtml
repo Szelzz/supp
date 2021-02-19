@@ -3,10 +3,11 @@
 @{
 }
 
-
 <form method="post">
-    Nazwa
-    <input asp-for="Project.Name" />
-    <br />
-    <input type="submit" value="Dodaj" />
+    <div class="mb-3">
+        <label for="name" class="form-label">Nazwa</label>
+        <input class="form-control" id="name" asp-for="Project.Name">
+        <div id="emailHelp" class="form-text">@Html.ValidationMessageFor(m=>m.Project.Name)</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Dodaj</button>
 </form>

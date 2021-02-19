@@ -8,8 +8,10 @@ using Microsoft.Extensions.Hosting;
 using Supp.Core;
 using Supp.Core.Authorization;
 using Supp.Core.Data.EF;
+using Supp.Core.Modifier;
 using Supp.Core.Posts;
 using Supp.Core.Projects;
+using Supp.Core.Tags;
 using Supp.Core.Users;
 using Supp.Web.Infrastructure.DependencyInjection;
 using Supp.Web.Security;
@@ -27,9 +29,14 @@ namespace Supp.Web
             // App services
             services.AddScoped<PostService>();
             services.AddScoped<ProjectService>();
+            services.AddScoped<TagService>();
             services.AddScoped<ApplicationDbContext>();
             services.AddScoped<PermissionAuthorizationService>();
             services.AddScoped<UniversalModelModifier>();
+
+            // modifiers
+            services.AddScoped<IModelModifier, DefaultModifier>();
+            services.AddScoped<IModelModifier, ProjectTagsModifier>();
 
             // Security
             services.AddScoped<AppAuthorizationService>();

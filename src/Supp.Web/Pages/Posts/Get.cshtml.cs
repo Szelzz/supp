@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Supp.Core;
+using Supp.Core.Modifier;
 using Supp.Core.Posts;
 using Supp.Web.Security;
 
@@ -15,11 +16,13 @@ namespace Supp.Web.Pages.Posts
     {
         private readonly PostService postService;
         private readonly AppAuthorizationService authorizationService;
+        private readonly UniversalModelModifier modelModifier;
 
-        public GetModel(PostService postService, AppAuthorizationService authorizationService)
+        public GetModel(PostService postService, AppAuthorizationService authorizationService, UniversalModelModifier modelModifier)
         {
             this.postService = postService;
             this.authorizationService = authorizationService;
+            this.modelModifier = modelModifier;
         }
 
         public Post Post { get; set; }
@@ -36,13 +39,12 @@ namespace Supp.Web.Pages.Posts
             return RedirectToPage("Get", new { id = postId });
         }
 
-        public async Task<IActionResult> OnPostEdit([FromBody] EditModel model)
+        public async Task<IActionResult> OnPostEdit([FromBody] EditData model)
         {
             var post = await postService.GetPostAsync(model.ModelId);
             if (post == null)
                 return NotFound();
 
-            var modelModifier = new UniversalModelModifier();
             var result = modelModifier.SetValue(post, model.PropertyName, model.Value);
             if (!result.Succeeded)
                 return BadRequest();
@@ -50,12 +52,5 @@ namespace Supp.Web.Pages.Posts
             await postService.Edit(post);
             return new JsonResult(model.Value);
         }
-    }
-
-    public class EditModel
-    {
-        public int ModelId { get; set; }
-        public string PropertyName { get; set; }
-        public string Value { get; set; }
     }
 }

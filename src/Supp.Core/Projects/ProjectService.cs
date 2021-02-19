@@ -29,6 +29,12 @@ namespace Supp.Core.Projects
             return await dbContext.Projects.Where(p => !p.Archived).ToListAsync();
         }
 
+        public Task<Project> GetAsync(int projectId)
+        {
+            return dbContext.Projects
+                .FirstOrDefaultAsync(p => p.Id == projectId);
+        }
+
         public async Task EditAsync(Project project)
         {
             if (project.Archived)
