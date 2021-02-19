@@ -24,14 +24,14 @@
         <span id="title-display">@Model.Post.Title</span>
         <input type="text" value="@Model.Post.Title" id="title-edit" class="edit-control" />*@
 </h2>
-<div style="border:1px solid #e2e2e2;padding: 10px">
+<pre class="mt-2">
     <editable update-url="@Url.Page("Get", "Edit")"
               property-name="@nameof(Model.Post.Body)"
               :model-id="@Model.Post.Id"
               model-value="@Model.Post.Body"
               template="textarea">
     </editable>
-</div>
+</pre>
 
 <h4>Komentarze</h4>
 
