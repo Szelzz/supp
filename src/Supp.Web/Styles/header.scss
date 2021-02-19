@@ -1,7 +1,7 @@
-﻿@use 'colors.scss' as *;
+﻿@import 'colors.scss';
 
 .header {
-    background-color: $primary-color;
+    background-color: $primary;
     /*height: 6rem;*/
 }
 
