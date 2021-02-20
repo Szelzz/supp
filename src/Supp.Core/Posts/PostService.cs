@@ -45,8 +45,11 @@ namespace Supp.Core.Posts
 
         public async Task<Post> GetPostAsync(int postId)
         {
-            return await dbContext.Posts.Include(p => p.Comments).
-                FirstOrDefaultAsync(p => p.Id == postId);
+            return await dbContext.Posts
+                .Include(p => p.Comments)
+                .Include(p => p.Tags)
+                .ThenInclude(t => t.Tag)
+                .FirstOrDefaultAsync(p => p.Id == postId);
         }
 
         public async Task Edit(Post post)

@@ -30,6 +30,7 @@ namespace Supp.Core.Data.EF
         public DbSet<ProjectOptions> ProjectOptions { get; set; }
         public new DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<PostTag> PostTag { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -53,6 +54,12 @@ namespace Supp.Core.Data.EF
                 .WithOne(r => r.Child)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Post>()
+                .HasOne(p => p.Project)
+                .WithMany(p => p.Posts)
+                .HasForeignKey(p => p.ProjectId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<UserRole>()
                 .HasOne(r => r.User)
                 .WithMany(u => u.Roles)
@@ -63,6 +70,21 @@ namespace Supp.Core.Data.EF
                 .HasOne(t => t.Project)
                 .WithMany(p => p.Tags)
                 .HasForeignKey(t => t.ProjectId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PostTag>()
+                .HasKey(t => new { t.PostId, t.TagId });
+
+            modelBuilder.Entity<PostTag>()
+                .HasOne(pt => pt.Tag)
+                .WithMany(t => t.Posts)
+                .HasForeignKey(pt => pt.TagId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PostTag>()
+                .HasOne(pt => pt.Post)
+                .WithMany(p => p.Tags)
+                .HasForeignKey(pt => pt.PostId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Asp Identity

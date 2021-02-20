@@ -1,4 +1,5 @@
 ﻿using Supp.Core.Projects;
+using Supp.Core.Tags;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,5 +28,8 @@ namespace Supp.Core.Posts
 
         public List<Comment> Comments { get; set; }
             = new List<Comment>();
+
+        public List<PostTag> Tags { get; set; }
+            = new List<PostTag>();
     }
 }

@@ -37,6 +37,7 @@ namespace Supp.Web
             // modifiers
             services.AddScoped<IModelModifier, DefaultModifier>();
             services.AddScoped<IModelModifier, ProjectTagsModifier>();
+            services.AddScoped<IModelModifier, PostTagsModifier>();
 
             // Security
             services.AddScoped<AppAuthorizationService>();

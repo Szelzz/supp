@@ -16,6 +16,8 @@ namespace Supp.Core.Tags
         public Project Project { get; set; }
         public int ProjectId { get; set; }
 
+        public List<PostTag> Posts { get; set; }
+            = new List<PostTag>();
 
         public static string NormalizeName(string value)
         {

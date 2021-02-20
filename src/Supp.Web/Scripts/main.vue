@@ -1,10 +1,12 @@
 ﻿<script>
-    import Editable from './Components/Editable.vue'
+    import Editable from './Components/Editables/Editable.vue'
+    import PostTagEditable from './Components/Editables/PostTagEditable.vue'
 
     export default {
         el: '#app',
         components: {
-            Editable
+            Editable,
+            PostTagEditable
         }
     }
 </script>

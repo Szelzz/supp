@@ -56,7 +56,7 @@ namespace Supp.Core.Modifier
                 }
             }
             if (bestModifier == null)
-                throw new NotImplementedException("Missing matching modifier");
+                throw new NotImplementedException($"Missing matching modifier. ModelType: {modelType}, PropertyType: {propertyType}, PropertyName: {propertyName}");
 
             return bestModifier;
         }
