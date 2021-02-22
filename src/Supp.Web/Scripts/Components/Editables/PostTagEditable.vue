@@ -45,7 +45,7 @@
                 currentTags: this.tags,
             }
         },
-        init() {
+        created() {
             this.setValue();
         },
         methods: {

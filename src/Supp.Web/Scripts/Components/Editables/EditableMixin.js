@@ -17,8 +17,6 @@
             editControl: null
         };
     },
-    init() {
-    },
     methods: {
         buttonMouseOver() {
             this.$refs.editableArea.classList.add("editable-area-hover");

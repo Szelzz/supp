@@ -22,9 +22,8 @@
         <post-tag-editable update-url="@Url.Page("Get", "Edit")"
                            property-name="@nameof(Model.Post.Tags)"
                            :model-id="@Model.Post.Id"
-                           model-value="@Model.Post.Tags"
                            :tags="@TagsToJson(Model.Post.Tags.Select(t=>t.Tag))"
-                           :all-tags="@TagsToJson( Model.AllowedTags)">
+                           :all-tags="@TagsToJson(Model.AllowedTags)">
         </post-tag-editable>
     </div>
 
