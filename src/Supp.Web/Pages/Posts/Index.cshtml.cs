@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Supp.Core.Authorization;
 using Supp.Core.Posts;
 using Supp.Core.Projects;
+using Supp.Core.Voting;
 using Supp.Web.Security;
 
 namespace Supp.Web.Pages.Posts
@@ -17,12 +18,17 @@ namespace Supp.Web.Pages.Posts
         private readonly PostService postServce;
         private readonly ProjectService projectService;
         private readonly AppAuthorizationService authorizationService;
+        private readonly VotingService votingService;
 
-        public ListModel(PostService postServce, ProjectService projectService, AppAuthorizationService authorizationService)
+        public ListModel(PostService postServce,
+            ProjectService projectService,
+            AppAuthorizationService authorizationService,
+            VotingService votingService)
         {
             this.postServce = postServce;
             this.projectService = projectService;
             this.authorizationService = authorizationService;
+            this.votingService = votingService;
         }
 
         public IEnumerable<Post> Posts { get; set; }
@@ -38,6 +44,11 @@ namespace Supp.Web.Pages.Posts
 
             Posts = await postServce.GetForProjectAsync(projectId);
             return Page();
+        }
+
+        public Task<int> VotesAsync(Post post)
+        {
+            return votingService.CountVotesAsync(post);
         }
     }
 }

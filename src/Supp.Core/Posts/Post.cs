@@ -1,5 +1,6 @@
 ﻿using Supp.Core.Projects;
 using Supp.Core.Tags;
+using Supp.Core.Voting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,16 +21,19 @@ namespace Supp.Core.Posts
         public PostStatus Status { get; set; }
         public PostPriority Priority { get; set; }
 
-        public List<PostRelation> Parents { get; set; }
+        public ICollection<PostRelation> Parents { get; set; }
             = new List<PostRelation>();
 
-        public List<PostRelation> Children { get; set; }
+        public ICollection<PostRelation> Children { get; set; }
             = new List<PostRelation>();
 
-        public List<Comment> Comments { get; set; }
+        public ICollection<Comment> Comments { get; set; }
             = new List<Comment>();
 
-        public List<PostTag> Tags { get; set; }
+        public ICollection<PostTag> Tags { get; set; }
             = new List<PostTag>();
+
+        public ICollection<Vote> Votes { get; set; }
+            = new List<Vote>();
     }
 }

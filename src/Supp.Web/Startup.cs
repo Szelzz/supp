@@ -13,6 +13,7 @@ using Supp.Core.Posts;
 using Supp.Core.Projects;
 using Supp.Core.Tags;
 using Supp.Core.Users;
+using Supp.Core.Voting;
 using Supp.Web.Infrastructure.DependencyInjection;
 using Supp.Web.Security;
 using System;
@@ -33,6 +34,7 @@ namespace Supp.Web
             services.AddScoped<ApplicationDbContext>();
             services.AddScoped<PermissionAuthorizationService>();
             services.AddScoped<UniversalModelModifier>();
+            services.AddScoped<VotingService>();
 
             // modifiers
             services.AddScoped<IModelModifier, DefaultModifier>();

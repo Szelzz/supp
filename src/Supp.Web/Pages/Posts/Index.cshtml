@@ -10,6 +10,7 @@
             <th class="no-stretch">Typ</th>
             <th class="no-stretch">Priorytet</th>
             <th class="no-stretch">Status</th>
+            <th class="no-stretch">Głosy</th>
             <th>Opis</th>
         </tr>
     </thead>
@@ -22,6 +23,7 @@
                 <td>@Html.PostTypeToIcon(post.Type)</td>
                 <td>@Html.PostPriorityToIcon(post.Priority)</td>
                 <td>@post.Status</td>
+                <td>@await Model.VotesAsync(post)</td>
                 <td>
                     <a asp-page="./Get" asp-route-id="@post.Id">@post.Title</a>
                 </td>

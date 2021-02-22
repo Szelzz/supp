@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Supp.Core.Projects;
-using System;
+using Supp.Core.Voting;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Supp.Core.Users
 {
     public class User : IdentityUser
     {
-        public List<UserRole> Roles { get; set; }
+        public ICollection<UserRole> Roles { get; set; }
             = new List<UserRole>();
+
+        public ICollection<Vote> Votes { get; set; }
+            = new List<Vote>();
     }
 }

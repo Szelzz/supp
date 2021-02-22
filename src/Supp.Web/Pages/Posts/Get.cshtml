@@ -7,38 +7,45 @@
         return "[" + string.Join(",", tags.Select(t => $"'{t.Name}'")) + "]";
     }
 }
+<div class="position-relative">
+    <votes vote-url="@Url.Page("Get", "Vote", new { postId = Model.Post.Id })"
+           undo-url="@Url.Page("Get", "UndoVote", new { postId = Model.Post.Id })"
+           :init-votes="@Model.Votes"
+           :init-voted="@Json.Serialize(Model.UserVoted)">
+    </votes>
 
-<div>
-    @Html.PostTypeToIcon(Model.Post.Type) | @Html.PostPriorityToIcon(Model.Post.Priority)
-</div>
-@*Tagi*@
-<div>
-    <post-tag-editable update-url="@Url.Page("Get", "Edit")"
-                       property-name="@nameof(Model.Post.Tags)"
-                       :model-id="@Model.Post.Id"
-                       model-value="@Model.Post.Tags"
-                       :tags="@TagsToJson(Model.Post.Tags.Select(t=>t.Tag))"
-                       :all-tags="@TagsToJson( Model.AllowedTags)">
-    </post-tag-editable>
-</div>
-<h2>
-    <editable update-url="@Url.Page("Get", "Edit")"
-              property-name="@nameof(Model.Post.Title)"
-              :model-id="@Model.Post.Id"
-              model-value="@Model.Post.Title">
-    </editable>
+    <div>
+        @Html.PostTypeToIcon(Model.Post.Type) | @Html.PostPriorityToIcon(Model.Post.Priority)
+    </div>
+    @*Tagi*@
+    <div>
+        <post-tag-editable update-url="@Url.Page("Get", "Edit")"
+                           property-name="@nameof(Model.Post.Tags)"
+                           :model-id="@Model.Post.Id"
+                           model-value="@Model.Post.Tags"
+                           :tags="@TagsToJson(Model.Post.Tags.Select(t=>t.Tag))"
+                           :all-tags="@TagsToJson( Model.AllowedTags)">
+        </post-tag-editable>
+    </div>
+
+    <h2>
+        <editable update-url="@Url.Page("Get", "Edit")"
+                  property-name="@nameof(Model.Post.Title)"
+                  :model-id="@Model.Post.Id"
+                  model-value="@Model.Post.Title">
+        </editable>
 
 
 
-    @*<edit-button update-url="@Url.Page("Get", "Edit")"
-                     property-name="@nameof(Model.Post.Title)"
-                     model-id="@Model.Post.Id"
-                     model-value="@Model.Post.Title"
-                     display-control-id="title-display"
-                     edit-control-id="title-edit"></edit-button>
-        <span id="title-display">@Model.Post.Title</span>
-        <input type="text" value="@Model.Post.Title" id="title-edit" class="edit-control" />*@
-</h2>
+        @*<edit-button update-url="@Url.Page("Get", "Edit")"
+                         property-name="@nameof(Model.Post.Title)"
+                         model-id="@Model.Post.Id"
+                         model-value="@Model.Post.Title"
+                         display-control-id="title-display"
+                         edit-control-id="title-edit"></edit-button>
+            <span id="title-display">@Model.Post.Title</span>
+            <input type="text" value="@Model.Post.Title" id="title-edit" class="edit-control" />*@
+    </h2>
 <pre class="mt-2">
 <editable update-url="@Url.Page("Get", "Edit")"
           property-name="@nameof(Model.Post.Body)"
@@ -48,21 +55,22 @@
     </editable>
 </pre>
 
-<h4>Komentarze</h4>
+    <h4>Komentarze</h4>
 
-<form asp-page-handler="Comment" method="post">
-    <input type="hidden" name="postId" value="@Model.Post.Id" />
-    <textarea class="form-control" name="Body"></textarea>
-    <button class="btn btn-primary" type="submit">Dodaj</button>
-</form>
-@if (Model.Post.Comments.Count == 0)
-{
-    <div class="no-data">Brak komentarzy</div>
-}
-@foreach (var comment in Model.Post.Comments.OrderByDescending(c => c.CreateTime))
-{
-    <div>
-        <div class="text-secondary">@comment.CreateTime</div>
-        @comment.Body
-    </div>
-}
+    <form asp-page-handler="Comment" method="post">
+        <input type="hidden" name="postId" value="@Model.Post.Id" />
+        <textarea class="form-control" name="Body"></textarea>
+        <button class="btn btn-primary" type="submit">Dodaj</button>
+    </form>
+    @if (Model.Post.Comments.Count == 0)
+    {
+        <div class="no-data">Brak komentarzy</div>
+    }
+    @foreach (var comment in Model.Post.Comments.OrderByDescending(c => c.CreateTime))
+    {
+        <div>
+            <div class="text-secondary">@comment.CreateTime</div>
+            @comment.Body
+        </div>
+    }
+</div>

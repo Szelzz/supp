@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Supp.Core.Users;
 using Microsoft.AspNetCore.Identity;
 using Supp.Core.Tags;
+using Supp.Core.Voting;
 
 namespace Supp.Core.Data.EF
 {
@@ -31,6 +32,7 @@ namespace Supp.Core.Data.EF
         public new DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<PostTag> PostTag { get; set; }
+        public DbSet<Vote> Votes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -86,6 +88,17 @@ namespace Supp.Core.Data.EF
                 .WithMany(p => p.Tags)
                 .HasForeignKey(pt => pt.PostId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Vote>()
+                .HasKey(v => new { v.PostId, v.UserId });
+            modelBuilder.Entity<Vote>()
+                .HasOne(v => v.Post)
+                .WithMany(p => p.Votes)
+                .HasForeignKey(v => v.PostId);
+            modelBuilder.Entity<Vote>()
+                .HasOne(v => v.User)
+                .WithMany(p => p.Votes)
+                .HasForeignKey(v => v.UserId);
 
             // Asp Identity
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");
