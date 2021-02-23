@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -5,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Supp.Core;
 using Supp.Core.Authorization;
 using Supp.Core.Data.EF;
 using Supp.Core.Modifier;
@@ -17,7 +17,6 @@ using Supp.Core.Voting;
 using Supp.Web.Infrastructure.DependencyInjection;
 using Supp.Web.Security;
 using System;
-using System.Security.Claims;
 
 namespace Supp.Web
 {
@@ -54,7 +53,7 @@ namespace Supp.Web
             services.AddTransient(f => f.GetService<IHttpContextAccessor>().HttpContext.User);
 
             // Identity
-            services.AddScoped<IUserClaimsPrincipalFactory<User>, ClaimFactory>();
+            services.AddScoped<IClaimsTransformation, PermissionsClaimsTransformation>();
             services.AddIdentityWithoutRoles<User>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();

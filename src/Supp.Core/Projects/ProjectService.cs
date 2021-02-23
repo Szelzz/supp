@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Supp.Core.Authorization;
 using Supp.Core.Data.EF;
 using System;
 using System.Collections.Generic;
@@ -11,17 +12,24 @@ namespace Supp.Core.Projects
     public class ProjectService
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly PermissionAuthorizationService authService;
 
-        public ProjectService(ApplicationDbContext dbContext)
+        public ProjectService(ApplicationDbContext dbContext, PermissionAuthorizationService authService)
         {
             this.dbContext = dbContext;
+            this.authService = authService;
         }
 
         public async Task CreateAsync(Project project)
         {
             project.Id = 0;
-            dbContext.Projects.Add(project);
-            await dbContext.SaveChangesAsync();
+            using (var transaction = dbContext.Database.BeginTransaction())
+            {
+                dbContext.Projects.Add(project);
+                await dbContext.SaveChangesAsync();
+                await authService.GrantRoleAsync(Role.ProjectOwner, project);
+                await transaction.CommitAsync();
+            }
         }
 
         public async Task<List<Project>> GetAllAsync()

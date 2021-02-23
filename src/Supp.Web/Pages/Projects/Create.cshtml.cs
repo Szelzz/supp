@@ -24,7 +24,7 @@ namespace Supp.Web.Pages.Projects
         {
             Project.ProjectOptions = new ProjectOptions();
             await projectService.CreateAsync(Project);
-            return RedirectToPage("Get", new { id = Project.Id });
+            return RedirectToPage("/Posts/Index", new { projectId = Project.Id });
         }
     }
 }
