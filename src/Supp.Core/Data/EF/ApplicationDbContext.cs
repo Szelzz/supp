@@ -100,6 +100,16 @@ namespace Supp.Core.Data.EF
                 .WithMany(p => p.Votes)
                 .HasForeignKey(v => v.UserId);
 
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Author)
+                .WithMany()
+                .HasForeignKey(c => c.AuthorId)
+                .IsRequired(true);
+
+            modelBuilder.Entity<Comment>()
+                .Property(c => c.Body)
+                .IsRequired(true);
+
             // Asp Identity
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");
             modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Supp.Core.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,10 @@ namespace Supp.Core.Posts
 
         public int PostId { get; set; }
         public Post Post { get; set; }
+
+        public string AuthorId { get; set; }
+        public User Author { get; set; }
+
+        public bool Pinned { get; set; } = false;
     }
 }

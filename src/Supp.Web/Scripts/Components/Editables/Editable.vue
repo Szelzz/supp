@@ -12,7 +12,6 @@
                       v-if="template == 'textarea'"
                       v-model="value"
                       v-show="editMode"></textarea>
-
         </span>
         <span>
             <button @click="edit" v-show="!editMode" class="btn btn-sm btn-outline-dark" @mouseover="buttonMouseOver" @mouseout="buttonMouseOut">

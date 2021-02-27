@@ -55,21 +55,7 @@
 </pre>
 
     <h4>Komentarze</h4>
-
-    <form asp-page-handler="Comment" method="post">
-        <input type="hidden" name="postId" value="@Model.Post.Id" />
-        <textarea class="form-control" name="Body"></textarea>
-        <button class="btn btn-primary" type="submit">Dodaj</button>
-    </form>
-    @if (Model.Post.Comments.Count == 0)
-    {
-        <div class="no-data">Brak komentarzy</div>
-    }
-    @foreach (var comment in Model.Post.Comments.OrderByDescending(c => c.CreateTime))
-    {
-        <div>
-            <div class="text-secondary">@comment.CreateTime</div>
-            @comment.Body
-        </div>
-    }
+    <comments add-url="@Url.Page("Get", "Comment")"
+              get-all-url="@Url.Page("Get", "AllComments", new { postId = Model.Post.Id })">
+    </comments>
 </div>
