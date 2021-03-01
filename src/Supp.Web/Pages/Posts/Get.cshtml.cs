@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Supp.Core;
+using Supp.Core.Comments;
 using Supp.Core.Modifier;
 using Supp.Core.Posts;
 using Supp.Core.Tags;
@@ -21,18 +22,21 @@ namespace Supp.Web.Pages.Posts
         private readonly AppAuthorizationService authorizationService;
         private readonly UniversalModelModifier modelModifier;
         private readonly VotingService votingService;
+        private readonly CommentService commentService;
 
         public GetModel(PostService postService,
             TagService tagService,
             AppAuthorizationService authorizationService,
             UniversalModelModifier modelModifier,
-            VotingService votingService)
+            VotingService votingService,
+            CommentService commentService)
         {
             this.postService = postService;
             this.tagService = tagService;
             this.authorizationService = authorizationService;
             this.modelModifier = modelModifier;
             this.votingService = votingService;
+            this.commentService = commentService;
         }
 
         public Post Post { get; set; }
@@ -71,6 +75,7 @@ namespace Supp.Web.Pages.Posts
                 return BadRequest();
 
             await postService.Edit(post);
+
             return new JsonResult(model.Value);
         }
 
@@ -92,6 +97,18 @@ namespace Supp.Web.Pages.Posts
 
             await votingService.UndoAsync(post);
             return new JsonResult("OK");
+        }
+
+        public async Task<IActionResult> OnPostAllComments(int postId)
+        {
+            var comments = await commentService.AllCommentsAsync(postId);
+            return new AjaxResponse(comments);
+        }
+
+        public async Task<IActionResult> OnPostNewComment([FromBody] CommentModel model)
+        {
+            var comment = await commentService.AddCommentAsync(model.PostId, model.Body);
+            return new AjaxResponse(comment);
         }
     }
 }

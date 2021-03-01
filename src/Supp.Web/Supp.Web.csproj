@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Watch Remove="Scripts\Ajax.js" />
     <Watch Remove="Scripts\Components\Editable.vue" />
     <Watch Remove="Scripts\Components\Editables\EditableMixin.js" />
     <Watch Remove="Scripts\Components\Editables\PostTagEditable.vue" />

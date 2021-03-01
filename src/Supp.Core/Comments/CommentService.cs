@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Supp.Core.Data.EF;
 using Supp.Core.Posts;
 using Supp.Core.Users;
@@ -44,6 +45,17 @@ namespace Supp.Core.Comments
             comment.Pinned = true;
             dbContext.Attach(comment).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             await dbContext.SaveChangesAsync();
+        }
+
+        public Task<List<Comment>> AllCommentsAsync(int postId)
+        {
+            var comments = dbContext.Comments
+                .Where(c => c.PostId == postId)
+                .OrderBy(c => c.Pinned)
+                .ThenBy(c => c.CreateTime)
+                .ToListAsync();
+
+            return comments;
         }
     }
 }

@@ -33,6 +33,7 @@ namespace Supp.Core.Data.EF
         public DbSet<Tag> Tags { get; set; }
         public DbSet<PostTag> PostTag { get; set; }
         public DbSet<Vote> Votes { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

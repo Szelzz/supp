@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Supp.Core.Authorization;
+using Supp.Core.Comments;
 using Supp.Core.Data.EF;
 using Supp.Core.Modifier;
 using Supp.Core.Posts;
@@ -34,6 +35,7 @@ namespace Supp.Web
             services.AddScoped<PermissionAuthorizationService>();
             services.AddScoped<UniversalModelModifier>();
             services.AddScoped<VotingService>();
+            services.AddScoped<CommentService>();
 
             // modifiers
             services.AddScoped<IModelModifier, DefaultModifier>();
