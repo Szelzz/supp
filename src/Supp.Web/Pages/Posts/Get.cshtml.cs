@@ -102,13 +102,13 @@ namespace Supp.Web.Pages.Posts
         public async Task<IActionResult> OnPostAllComments(int postId)
         {
             var comments = await commentService.AllCommentsAsync(postId);
-            return new AjaxResponse(comments);
+            return new AjaxResponse(comments.Select(c => new CommentModel(c)));
         }
 
         public async Task<IActionResult> OnPostNewComment([FromBody] CommentModel model)
         {
             var comment = await commentService.AddCommentAsync(model.PostId, model.Body);
-            return new AjaxResponse(comment);
+            return new AjaxResponse(new CommentModel(comment));
         }
     }
 }

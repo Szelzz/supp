@@ -37,6 +37,7 @@ namespace Supp.Core.Comments
             };
             dbContext.Add(comment);
             await dbContext.SaveChangesAsync();
+            await dbContext.Entry(comment).Reference(c => c.Author).LoadAsync();
             return comment;
         }
 
@@ -50,6 +51,7 @@ namespace Supp.Core.Comments
         public Task<List<Comment>> AllCommentsAsync(int postId)
         {
             var comments = dbContext.Comments
+                .Include(c => c.Author)
                 .Where(c => c.PostId == postId)
                 .OrderBy(c => c.Pinned)
                 .ThenBy(c => c.CreateTime)

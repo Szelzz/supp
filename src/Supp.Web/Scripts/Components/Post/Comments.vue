@@ -2,7 +2,7 @@
     <div>
         <div class="no-data" v-if="!comments">Brak komentarzy</div>
         <div v-for="comment in comments" class="comment">
-            <div class="text-secondary">{{ comment.createTime }}</div>
+            <div class="text-secondary">{{ comment.createTime }} - {{ comment.author }}</div>
             {{ comment.body }}
         </div>
         <textarea class="form-control" v-model="body" required></textarea>
