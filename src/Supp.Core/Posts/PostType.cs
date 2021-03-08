@@ -1,4 +1,4 @@
-﻿namespace Supp.Core
+﻿namespace Supp.Core.Posts
 {
     public enum PostType
     {

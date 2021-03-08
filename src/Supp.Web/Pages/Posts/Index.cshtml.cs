@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Supp.Core.Authorization;
 using Supp.Core.Posts;
 using Supp.Core.Projects;
+using Supp.Core.Search;
 using Supp.Core.Voting;
 using Supp.Web.Security;
 
@@ -19,16 +20,19 @@ namespace Supp.Web.Pages.Posts
         private readonly ProjectService projectService;
         private readonly AppAuthorizationService authorizationService;
         private readonly VotingService votingService;
+        private readonly SearchService searchService;
 
         public ListModel(PostService postServce,
             ProjectService projectService,
             AppAuthorizationService authorizationService,
-            VotingService votingService)
+            VotingService votingService,
+            SearchService searchService)
         {
             this.postServce = postServce;
             this.projectService = projectService;
             this.authorizationService = authorizationService;
             this.votingService = votingService;
+            this.searchService = searchService;
         }
 
         public IEnumerable<Post> Posts { get; set; }
@@ -46,9 +50,21 @@ namespace Supp.Web.Pages.Posts
             return Page();
         }
 
+        public async Task<IActionResult> OnPostSearchAsync([FromBody] SearchQuery searchQuery)
+        {
+            var project = projectService.GetWithPosts(searchQuery.ProjectId);
+            var result = await authorizationService.AuthorizePermissionAsync(Permission.ProjectCanRead, project);
+            if (!result.Succeeded)
+                return new ForbidResult();
+
+            var posts = await searchService.SearchAsync(searchQuery);
+            return new AjaxResponse(posts);
+        }
+
         public Task<int> VotesAsync(Post post)
         {
             return votingService.CountVotesAsync(post);
         }
+
     }
 }
