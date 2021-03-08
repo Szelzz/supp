@@ -32,7 +32,7 @@ namespace Supp.Web
             services.AddScoped<ProjectService>();
             services.AddScoped<TagService>();
             services.AddScoped<ApplicationDbContext>();
-            services.AddScoped<PermissionAuthorizationService>();
+            services.AddScoped<PermissionService>();
             services.AddScoped<UniversalModelModifier>();
             services.AddScoped<VotingService>();
             services.AddScoped<CommentService>();

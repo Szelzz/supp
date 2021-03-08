@@ -25,7 +25,7 @@ namespace Supp.Web.Pages.Projects
 
         public async Task OnGetAsync()
         {
-            Projects = await projectService.GetAllAsync();
+            Projects = await projectService.GetAllForUserAsync();
         }
     }
 }

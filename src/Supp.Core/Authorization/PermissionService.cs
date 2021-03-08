@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Supp.Core.Authorization
 {
-    public class PermissionAuthorizationService
+    public class PermissionService
     {
         private static readonly Dictionary<Role, List<Permission>> rolePermissionsMap = new Dictionary<Role, List<Permission>>();
 
@@ -19,12 +19,12 @@ namespace Supp.Core.Authorization
         private readonly ApplicationDbContext dbContext;
         private readonly UserManager<User> userManager;
 
-        static PermissionAuthorizationService()
+        static PermissionService()
         {
             LoadRolePermissions();
         }
 
-        public PermissionAuthorizationService(ClaimsPrincipal user, ApplicationDbContext dbContext, UserManager<User> userManager)
+        public PermissionService(ClaimsPrincipal user, ApplicationDbContext dbContext, UserManager<User> userManager)
         {
             this.user = user;
             this.dbContext = dbContext;
@@ -55,6 +55,24 @@ namespace Supp.Core.Authorization
                     return true;
             }
             return false;
+        }
+
+        public IEnumerable<T> AuthorizeCollection<T>(Permission permission, IEnumerable<T> resources)
+            where T : IResource
+        {
+            var collection = new List<T>();
+            foreach (var claim in user.Claims.Where(c => c.Type == PermissionClaim.ClaimType))
+            {
+                var permissionClaim = new PermissionClaim(claim);
+                if (!rolePermissionsMap[permissionClaim.Role].Any(p => p == permission))
+                    continue;
+                foreach (var resource in resources)
+                {
+                    if (permissionClaim.ResourceId == resource?.Id)
+                        collection.Add(resource);
+                }
+            }
+            return collection.Distinct();
         }
 
         public async Task GrantRoleAsync(Role role, IResource resource = null)

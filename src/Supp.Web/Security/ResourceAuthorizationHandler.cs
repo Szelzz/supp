@@ -12,9 +12,9 @@ namespace Supp.Web.Security
 {
     public class ResourceAuthorizationHandler : AuthorizationHandler<PermissionAuthorizationRequirement, IResource>
     {
-        private readonly PermissionAuthorizationService projectAuthorizationService;
+        private readonly PermissionService projectAuthorizationService;
 
-        public ResourceAuthorizationHandler(PermissionAuthorizationService projectAuthorizationService)
+        public ResourceAuthorizationHandler(PermissionService projectAuthorizationService)
         {
             this.projectAuthorizationService = projectAuthorizationService;
         }
@@ -30,9 +30,9 @@ namespace Supp.Web.Security
 
     public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAuthorizationRequirement, PermissionAuthorizationHandler.PermissionResourceHandler>
     {
-        private readonly PermissionAuthorizationService projectAuthorizationService;
+        private readonly PermissionService projectAuthorizationService;
 
-        public PermissionAuthorizationHandler(PermissionAuthorizationService projectAuthorizationService)
+        public PermissionAuthorizationHandler(PermissionService projectAuthorizationService)
         {
             this.projectAuthorizationService = projectAuthorizationService;
         }

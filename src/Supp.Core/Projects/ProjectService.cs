@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Supp.Core.Authorization;
 using Supp.Core.Data.EF;
+using Supp.Core.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,12 +15,22 @@ namespace Supp.Core.Projects
     public class ProjectService
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly PermissionAuthorizationService authService;
+        private readonly PermissionService authService;
+        private readonly UserManager<User> userManager;
+        private readonly ClaimsPrincipal currentUser;
+        private readonly PermissionService permissionService;
 
-        public ProjectService(ApplicationDbContext dbContext, PermissionAuthorizationService authService)
+        public ProjectService(ApplicationDbContext dbContext,
+            PermissionService authService,
+            UserManager<User> userManager,
+            ClaimsPrincipal currentUser,
+            PermissionService permissionService)
         {
             this.dbContext = dbContext;
             this.authService = authService;
+            this.userManager = userManager;
+            this.currentUser = currentUser;
+            this.permissionService = permissionService;
         }
 
         public async Task CreateAsync(Project project)
@@ -32,9 +45,13 @@ namespace Supp.Core.Projects
             }
         }
 
-        public async Task<List<Project>> GetAllAsync()
+        public async Task<List<Project>> GetAllForUserAsync()
         {
-            return await dbContext.Projects.Where(p => !p.Archived).ToListAsync();
+            var projects = await dbContext.Projects.Where(p => !p.Archived)
+                .ToListAsync();
+            return permissionService.AuthorizeCollection(Permission.ProjectCanRead, projects)
+                .OrderBy(p => p.Id)
+                .ToList();
         }
 
         public Task<Project> GetAsync(int projectId)
