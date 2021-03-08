@@ -15,8 +15,6 @@ using Supp.Web.Security;
 namespace Supp.Web.Pages.Posts
 {
     [IgnoreAntiforgeryToken(Order = 2000)] // Temporary
-        [PermissionAuthorizeAttribute2]
-        [PermissionAuthorizeAttribute]
     public class GetModel : PageModel
     {
         private readonly PostService postService;
