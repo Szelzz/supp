@@ -16,6 +16,7 @@ using Supp.Core.Search;
 using Supp.Core.Tags;
 using Supp.Core.Users;
 using Supp.Core.Voting;
+using Supp.Web.Infrastructure;
 using Supp.Web.Infrastructure.DependencyInjection;
 using Supp.Web.Security;
 using System;
@@ -107,6 +108,8 @@ namespace Supp.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<ShedulerMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
