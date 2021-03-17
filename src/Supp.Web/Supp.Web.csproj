@@ -44,6 +44,8 @@
     <Watch Remove="Scripts\Components\Editables\EditableMixin.js" />
     <Watch Remove="Scripts\Components\Editables\PostTagEditable.vue" />
     <Watch Remove="Scripts\Components\Post\Comments.vue" />
+    <Watch Remove="Scripts\Components\Post\PostList.vue" />
+    <Watch Remove="Scripts\Components\Post\Search.vue" />
     <Watch Remove="Scripts\Components\Post\Votes.vue" />
     <Watch Remove="Styles\Cards.scss" />
     <Watch Remove="Styles\colors.scss" />

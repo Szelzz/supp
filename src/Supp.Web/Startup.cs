@@ -12,6 +12,7 @@ using Supp.Core.Data.EF;
 using Supp.Core.Modifier;
 using Supp.Core.Posts;
 using Supp.Core.Projects;
+using Supp.Core.Search;
 using Supp.Core.Tags;
 using Supp.Core.Users;
 using Supp.Core.Voting;
@@ -36,6 +37,7 @@ namespace Supp.Web
             services.AddScoped<UniversalModelModifier>();
             services.AddScoped<VotingService>();
             services.AddScoped<CommentService>();
+            services.AddScoped<SearchService>();
 
             // modifiers
             services.AddScoped<IModelModifier, DefaultModifier>();

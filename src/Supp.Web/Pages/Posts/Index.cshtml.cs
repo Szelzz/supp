@@ -58,7 +58,8 @@ namespace Supp.Web.Pages.Posts
                 return new ForbidResult();
 
             var posts = await searchService.SearchAsync(searchQuery);
-            return new AjaxResponse(posts);
+
+            return new AjaxResponse(posts.Select(p => new PostListItem(p, votingService.CountVotesAsync(p).Result)));
         }
 
         public Task<int> VotesAsync(Post post)

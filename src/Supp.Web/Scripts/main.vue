@@ -3,6 +3,8 @@
     import PostTagEditable from './Components/Editables/PostTagEditable.vue'
     import Votes from './Components/Post/Votes.vue'
     import Comments from './Components/Post/Comments.vue'
+    import Search from './Components/Post/Search.vue'
+    import PostList from './Components/Post/PostList.vue'
 
     export default {
         el: '#app',
@@ -10,7 +12,9 @@
             Editable,
             PostTagEditable,
             Votes,
-            Comments
+            Comments,
+            Search,
+            PostList
         }
     }
 </script>

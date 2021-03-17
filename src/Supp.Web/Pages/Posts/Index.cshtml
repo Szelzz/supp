@@ -7,76 +7,83 @@
 }
 <div class="row">
     <div class="col-3 search-menu bg-dark text-white">
-        <div class="d-grid gap-2">
-            <h4>Szukaj</h4>
-            <input type="text" class="form-control" placeholder="tytuł, treść" />
-            <h5>
-                Typ
-            </h5>
-            @foreach (PostType type in Enum.GetValues(typeof(PostType)))
-            {
-                <div>
-                    <input class="form-check-input" type="checkbox" value="" id="type-@type" checked>
-                    <label class="form-check-label" for="type-@type">
-                        @Html.PostTypeToIcon(type)
-                        @Labels.ResourceManager.GetString(type.ToString())
-                    </label>
-                </div>
-            }
-            <h5>Status</h5>
-            @foreach (var status in SearchData.PostStatusForSearch.Select(Enum.GetName<PostStatus>))
-            {
-                <div>
-                    <input class="form-check-input" type="checkbox" value="" id="type-@status" checked>
-                    <label class="form-check-label" for="type-@status">
-                        @Labels.ResourceManager.GetString(status)
-                    </label>
-                </div>
-            }
-            <h5>Priorytet</h5>
-            @foreach (PostPriority priority in Enum.GetValues(typeof(PostPriority)))
-            {
-                <div>
-                    <input class="form-check-input" type="checkbox" value="" id="type-@priority" checked>
-                    <label class="form-check-label" for="type-@priority">
-                        @Html.PostPriorityToIcon(priority)
-                        @Labels.ResourceManager.GetString(priority.ToString())
-                    </label>
-                </div>
-            }
-            <button class="btn btn-primary mt-1" type="button">Zatwierdź</button>
-        </div>
+        <search search-url="@Url.Page("Index", "search")"
+                :project-id="@Model.ProjectId"
+                inline-template>
+            <div class="d-grid gap-2">
+                <h4>Szukaj</h4>
+                <input type="text" class="form-control" placeholder="tytuł, treść" 
+                       v-model="text" 
+                       v-on:keyup.enter="search"/>
+                <h5>
+                    Typ
+                </h5>
+                @foreach (PostType type in Enum.GetValues(typeof(PostType)))
+                {
+                    <div>
+                        <input class="form-check-input" type="checkbox" :value="@((int)type)" id="type-@type" checked
+                               v-model="types">
+                        <label class="form-check-label" for="type-@type">
+                            @Html.PostTypeToIcon(type)
+                            @Labels.ResourceManager.GetString(type.ToString())
+                        </label>
+                    </div>
+                }
+                <h5>Status</h5>
+                @foreach (var status in SearchData.PostStatusForSearch)
+                {
+                    <div>
+                        <input class="form-check-input" type="checkbox" :value="@((int)status)" id="type-@status" checked
+                               v-model="statuses">
+                        <label class="form-check-label" for="type-@status">
+                            @Labels.ResourceManager.GetString(status.ToString())
+                        </label>
+                    </div>
+                }
+                <h5>Priorytet</h5>
+                @foreach (PostPriority priority in Enum.GetValues(typeof(PostPriority)))
+                {
+                    <div>
+                        <input class="form-check-input" type="checkbox" :value="@((int)priority)" id="type-@priority" checked
+                               v-model="priorities">
+                        <label class="form-check-label" for="type-@priority">
+                            @Html.PostPriorityToIcon(priority)
+                            @Labels.ResourceManager.GetString(priority.ToString())
+                        </label>
+                    </div>
+                }
+                <button class="btn btn-primary mt-1" type="button" v-on:click="search">Zatwierdź</button>
+            </div>
+        </search>
     </div>
     <div class="col">
         <a asp-page="./Create" asp-route-projectId="@Model.ProjectId" class="btn btn-outline-primary">Dodaj nowy</a>
         <a asp-page="../Projects/Details" asp-route-projectId="@Model.ProjectId" class="btn btn-outline-secondary">Szczegóły projektu</a>
-        <table class="table details-table">
-            <thead>
-                <tr>
-                    <th class="no-stretch">Typ</th>
-                    <th class="no-stretch">Priorytet</th>
-                    <th class="no-stretch">Status</th>
-                    <th class="no-stretch">Głosy</th>
-                    <th>Opis</th>
-                </tr>
-            </thead>
+        <post-list inline-template>
+            <table class="table details-table">
+                <thead>
+                    <tr>
+                        <th class="no-stretch">Typ</th>
+                        <th class="no-stretch">Priorytet</th>
+                        <th class="no-stretch">Status</th>
+                        <th class="no-stretch">Głosy</th>
+                        <th>Opis</th>
+                    </tr>
+                </thead>
 
-            <tbody>
-
-                @foreach (var post in Model.Posts)
-                {
-                    <tr data-post-id="@post.Id">
-                        <td>@Html.PostTypeToIcon(post.Type)</td>
-                        <td>@Html.PostPriorityToIcon(post.Priority)</td>
-                        <td>@post.Status</td>
-                        <td>@await Model.VotesAsync(post)</td>
+                <tbody>
+                    <tr v-for="post in posts" :data-post-id="post.id">
+                        <td>{{ post.type }}</td>
+                        <td>{{ post.priority }}</td>
+                        <td>{{ post.status }}</td>
+                        <td>{{ post.votes }}</td>
                         <td>
-                            <a asp-page="./Get" asp-route-id="@post.Id">@post.Title</a>
+                            <a :href="'@Url.Page("Get")?id=' + post.id">{{ post.title }}</a>
                         </td>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </post-list>
     </div>
 </div>
 

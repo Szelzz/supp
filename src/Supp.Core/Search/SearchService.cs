@@ -37,6 +37,7 @@ namespace Supp.Core.Search
             query = query.Where(p =>
                 searchQuery.Types.Contains(p.Type));
 
+            query = query.OrderByDescending(p => p.CreationDate);
             return query.ToListAsync();
         }
     }
