@@ -28,7 +28,8 @@ namespace Supp.Core.Voting
         public async Task VoteUpAsync(Post post)
         {
             var userId = userManager.GetUserId(currentUser);
-            var vote = await dbContext.Votes.FirstOrDefaultAsync(v => v.PostId == post.Id && v.UserId == userId);
+            var vote = await dbContext.Votes
+                .FirstOrDefaultAsync(v => v.PostId == post.Id && v.UserId == userId);
             if (vote != null)
                 return;
 
@@ -44,7 +45,8 @@ namespace Supp.Core.Voting
         public async Task UndoAsync(Post post)
         {
             var userId = userManager.GetUserId(currentUser);
-            var vote = await dbContext.Votes.FirstOrDefaultAsync(v => v.PostId == post.Id && v.UserId == userId);
+            var vote = await dbContext.Votes
+                .FirstOrDefaultAsync(v => v.PostId == post.Id && v.UserId == userId);
             if (vote == null)
                 return;
 
@@ -60,7 +62,8 @@ namespace Supp.Core.Voting
         public Task<bool> UserVoted(Post post)
         {
             var userId = userManager.GetUserId(currentUser);
-            return dbContext.Votes.AnyAsync(v => v.PostId == post.Id && v.UserId == userId);
+            return dbContext.Votes
+                .AnyAsync(v => v.PostId == post.Id && v.UserId == userId);
         }
     }
 }

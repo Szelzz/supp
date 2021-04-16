@@ -12,6 +12,7 @@ using Supp.Core.Data.EF;
 using Supp.Core.Modifier;
 using Supp.Core.Posts;
 using Supp.Core.Projects;
+using Supp.Core.Scheduler;
 using Supp.Core.Search;
 using Supp.Core.Tags;
 using Supp.Core.Users;
@@ -39,6 +40,7 @@ namespace Supp.Web
             services.AddScoped<VotingService>();
             services.AddScoped<CommentService>();
             services.AddScoped<SearchService>();
+            services.AddTransient<IScheduler, InMemoryScheduler>();
 
             // modifiers
             services.AddScoped<IModelModifier, DefaultModifier>();

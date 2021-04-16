@@ -5,13 +5,13 @@ using System.Threading;
 
 namespace Supp.Core.Scheduler
 {
-    public class InMemorySheduler : IScheduler
+    public class InMemoryScheduler : IScheduler
     {
-        private readonly ILogger logger;
+        private readonly ILogger<InMemoryScheduler> logger;
         private static readonly Dictionary<string, DateTime> executed = new Dictionary<string, DateTime>();
         private static readonly object shedulerLock = new object();
 
-        public InMemorySheduler(ILogger logger)
+        public InMemoryScheduler(ILogger<InMemoryScheduler> logger)
         {
             this.logger = logger;
         }
