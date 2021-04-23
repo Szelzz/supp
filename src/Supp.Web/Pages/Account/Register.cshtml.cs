@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -21,8 +22,12 @@ namespace Supp.Web.Pages.Account
         }
 
         [BindProperty]
+        [Required]
         public string Username { get; set; }
+
         [BindProperty]
+        [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         public void OnGet()
