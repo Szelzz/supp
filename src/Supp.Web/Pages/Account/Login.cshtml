@@ -2,11 +2,20 @@
 @model Supp.Web.Pages.Account.LoginModel
 @{
 }
-<div class="row text-center login-split mt-3">
+<div class="row login-split mt-3">
     <div class="col">
         <form method="post">
-            @Html.EditorForModel()
-            <button class="btn btn-primary" type="submit">Zaloguj się</button>
+            <div class="mb-3">
+                <label class="form-label">Nazwa</label>
+                <input asp-for="UserName" class="form-control" />
+            </div>
+            <div class="mb-3">
+
+                <label class="form-label">Hasło</label>
+                <input class="form-control" type="password" asp-for="Password" />
+            </div>
+
+            <button class="btn btn-primary btn-block" type="submit">Zaloguj się</button>
         </form>
     </div>
     <div class="col register">
