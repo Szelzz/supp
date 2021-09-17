@@ -31,7 +31,7 @@ namespace Supp.Web.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
