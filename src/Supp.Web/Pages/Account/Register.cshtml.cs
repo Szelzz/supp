@@ -47,6 +47,8 @@ namespace Supp.Web.Pages.Account
                 if (result.Succeeded)
                 {
                     await signInManager.SignInAsync(user, isPersistent: false);
+                    if (returnUrl == null)
+                        return RedirectToPage("/Projects/Index");
                     return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)

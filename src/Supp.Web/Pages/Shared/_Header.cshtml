@@ -1,4 +1,4 @@
-﻿<div class="header navbar navbar-expand-sm navbar-light">
+﻿<div class="header navbar navbar-expand-sm navbar-dark">
     <div class="container">
         <a class="logo navbar-brand" href="/">
             <img src="~/img/logo.png" />
@@ -13,12 +13,13 @@
             {
                 <a class="nav-link" asp-page="/Projects/Index">Projekty</a>
                 <a class="nav-link">@User.Identity.Name</a>
+                <a class="nav-link" asp-page="/Account/Logout">Wyloguj</a>
             }
             else
             {
                 <a class="nav-link" asp-page="/Account/Login">Zaloguj się</a>
             }
-            </div>
+            </div> 
         </div>
     </div>
 </div>

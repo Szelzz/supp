@@ -14,5 +14,7 @@ namespace Supp.Core.Voting
         public User User { get; set; }
         public int PostId { get; set; }
         public Post Post { get; set; }
+        public DateTime VoteTime { get; set; }
+            = DateTime.Now;
     }
 }

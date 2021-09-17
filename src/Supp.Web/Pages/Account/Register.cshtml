@@ -2,8 +2,19 @@
 @model Supp.Web.Pages.Account.RegisterModel
 @{
 }
-<form method="post">
-    @Html.ValidationSummary()
-    @Html.EditorForModel()
-    <button type="submit" class="btn btn-primary">Zarejestruj się</button>
-</form>
+<div class="col-md-6 ms-auto me-auto">
+
+    <form method="post">
+        @Html.ValidationSummary()
+        <div class="mb-3">
+            <label class="form-label">Nazwa</label>
+            <input asp-for="Username" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Hasło</label>
+            <input class="form-control" type="password" asp-for="Password" />
+        </div>
+
+        <button class="btn btn-primary btn-block" type="submit">Zarejestruj się</button>
+    </form>
+</div>
