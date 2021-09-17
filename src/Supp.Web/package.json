@@ -23,9 +23,9 @@
     "vue": "2.6.12"
   },
   "scripts": {
-    "build": "webpack --mode=development",
-    "build:Release": "webpack --mode=production",
-    "build:Debug": "webpack --mode=development",
-    "watch": "webpack serve --hot"
+    "build": "npx webpack --mode=development",
+    "build:Release": "npx webpack --mode=production",
+    "build:Debug": "npx webpack --mode=development",
+    "watch": "npx webpack serve --hot"
   }
 }
