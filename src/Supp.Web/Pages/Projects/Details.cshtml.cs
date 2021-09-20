@@ -40,7 +40,7 @@ namespace Supp.Web.Pages.Projects
             if (Project == null)
                 return NotFound();
 
-            if (permissionService.Authorize(Permission.ProjectCanModify, Project))
+            if (!permissionService.Authorize(Permission.ProjectCanModify, Project))
                 return new ForbidResult();
 
             ProjectTags = string.Join(",", (await tagService.GetForProjectAsync(projectId)).Select(t => t.Name));
@@ -54,7 +54,7 @@ namespace Supp.Web.Pages.Projects
             if (project == null)
                 return NotFound();
 
-            if (permissionService.Authorize(Permission.ProjectCanModify, Project))
+            if (!permissionService.Authorize(Permission.ProjectCanModify, Project))
                 return new ForbidResult();
 
             var result = modelModifier.SetValue(project, model.PropertyName, model.Value);
