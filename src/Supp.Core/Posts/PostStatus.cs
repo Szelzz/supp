@@ -2,8 +2,7 @@
 {
     public enum PostStatus
     {
-        // unresolved
-        New = 1,
+        New,
         Assigned,
         Done,
         Incorrect,

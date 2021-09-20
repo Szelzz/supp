@@ -9,7 +9,7 @@
         data() {
             return {
                 text: "",
-                statuses: [1, 2, 3, 4, 5],
+                statuses: [0, 1, 2, 3, 4],
                 types: [0, 1, 2],
                 priorities: [0, 1, 2, 3]
             }
