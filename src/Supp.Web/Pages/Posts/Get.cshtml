@@ -1,12 +1,6 @@
 ﻿@page
 @using Supp.Core.Tags
 @model Supp.Web.Pages.Posts.GetModel
-@functions{
-    public string TagsToJson(IEnumerable<Tag> tags)
-    {
-        return "[" + string.Join(",", tags.Select(t => $"'{t.Name}'")) + "]";
-    }
-}
 <div class="position-relative">
     <votes vote-url="@Url.Page("Get", "Vote", new { postId = Model.Post.Id })"
            undo-url="@Url.Page("Get", "UndoVote", new { postId = Model.Post.Id })"
@@ -22,8 +16,8 @@
         <post-tag-editable update-url="@Url.Page("Get", "Edit")"
                            property-name="@nameof(Model.Post.Tags)"
                            :model-id="@Model.Post.Id"
-                           :tags="@TagsToJson(Model.Post.Tags.Select(t=>t.Tag))"
-                           :all-tags="@TagsToJson(Model.AllowedTags)">
+                           :tags="@SerializationHelpers.TagsToJson(Model.Post.Tags.Select(t=>t.Tag))"
+                           :all-tags="@SerializationHelpers.TagsToJson(Model.AllowedTags)">
         </post-tag-editable>
     </div>
 

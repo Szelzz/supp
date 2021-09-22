@@ -14,13 +14,7 @@ export default {
         })
             .then(r => r.json())
             .then(json => {
-                if (json.succeeded) {
-                    if (onSuccess)
-                        onSuccess(json);
-                } else {
-                    if (onError)
-                        onError(json);
-                }
+                onSuccess(json);
             })
             .catch(e => {
                 if (onError)

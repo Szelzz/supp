@@ -50,19 +50,58 @@ namespace Supp.Web.Pages.Projects
 
         public async Task<IActionResult> OnPostEdit([FromBody] EditData model)
         {
-            var project = await projectService.GetAsync(model.ModelId);
-            if (project == null)
+            Project = await projectService.GetAsync(model.ModelId);
+            if (Project == null)
                 return NotFound();
 
             if (!permissionService.Authorize(Permission.ProjectCanModify, Project))
                 return new ForbidResult();
 
-            var result = modelModifier.SetValue(project, model.PropertyName, model.Value);
+            var result = modelModifier.SetValue(Project, model.PropertyName, model.Value);
             if (!result.Succeeded)
                 return BadRequest();
 
-            await projectService.EditAsync(project);
+            await projectService.EditAsync(Project);
             return new JsonResult(model.Value);
+        }
+
+        public async Task<IActionResult> OnPostTagAdd([FromBody] TagInfo tagInfo)
+        {
+            Project = await projectService.GetAsync(tagInfo.ProjectId);
+            if (Project == null)
+                return NotFound();
+
+            if (!permissionService.Authorize(Permission.ProjectCanModify, Project))
+                return new ForbidResult();
+
+            var resultTag = await tagService.AddToProjectAsync(tagInfo.ProjectId, tagInfo.TagName);
+            if (resultTag == null)
+                return new JsonResult("Invalid name")
+                {
+                    StatusCode = 400
+                };
+
+            return new JsonResult(resultTag);
+        }
+
+        public async Task<IActionResult> OnPostTagRemove([FromBody] TagInfo tagInfo)
+        {
+            Project = await projectService.GetAsync(tagInfo.ProjectId);
+            if (Project == null)
+                return NotFound();
+
+            if (!permissionService.Authorize(Permission.ProjectCanModify, Project))
+                return new ForbidResult();
+
+
+            await tagService.RemoveTag(tagInfo.ProjectId, tagInfo.TagName);
+
+            return new JsonResult("Ok");
+        }
+        public class TagInfo
+        {
+            public int ProjectId { get; set; }
+            public string TagName { get; set; }
         }
     }
 }

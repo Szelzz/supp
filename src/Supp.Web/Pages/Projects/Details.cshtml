@@ -9,11 +9,11 @@
               model-value="@Model.Project.Name">
     </editable>
 </h2>
-<label>
+<h3>
     Tagi
-</label>
-<editable update-url="@Url.Page("Details", "Edit")"
-          property-name="@nameof(Model.Project.Tags)"
-          :model-id="@Model.Project.Id"
-          model-value="@Model.ProjectTags">
-</editable>
+</h3>
+<project-tags-editable :tags="@SerializationHelpers.TagsToJson( Model.Project.Tags)"
+                       :project-id="@Model.Project.Id"
+                       add-url="@Url.Page("Details", "TagAdd")"
+                       remove-url="@Url.Page("Details", "TagRemove")">
+</project-tags-editable>
