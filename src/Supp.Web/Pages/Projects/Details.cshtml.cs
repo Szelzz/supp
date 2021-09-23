@@ -1,11 +1,9 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using Supp.Core;
 using Supp.Core.Authorization;
-using Supp.Core.Data.EF;
 using Supp.Core.Modifier;
 using Supp.Core.Projects;
 using Supp.Core.Tags;
@@ -19,20 +17,36 @@ namespace Supp.Web.Pages.Projects
         private readonly UniversalModelModifier modelModifier;
         private readonly TagService tagService;
         private readonly PermissionService permissionService;
+        private readonly ProjectPermissionService projectPermissionService;
 
         public DetailsModel(ProjectService projectService,
             UniversalModelModifier modelModifier,
             TagService tagService,
-            PermissionService permissionService)
+            PermissionService permissionService,
+            ProjectPermissionService projectPermissionService)
         {
             this.projectService = projectService;
             this.modelModifier = modelModifier;
             this.tagService = tagService;
             this.permissionService = permissionService;
+            this.projectPermissionService = projectPermissionService;
         }
 
         public Project Project { get; set; }
         public string ProjectTags { get; set; }
+        public List<UserRoleFlattened> UserRoles { get; set; }
+
+        public class UserRoleFlattened
+        {
+            public UserRoleFlattened(string username, Role role)
+            {
+                Username = username;
+                Role = role;
+            }
+
+            public string Username { get; set; }
+            public Role Role { get; set; }
+        }
 
         public async Task<IActionResult> OnGet(int projectId)
         {
@@ -44,6 +58,9 @@ namespace Supp.Web.Pages.Projects
                 return new ForbidResult();
 
             ProjectTags = string.Join(",", (await tagService.GetForProjectAsync(projectId)).Select(t => t.Name));
+
+            var userRoles = await projectPermissionService.GetRolesForProjectAsync(projectId);
+            UserRoles = userRoles.Select(r => new UserRoleFlattened(r.User.UserName, r.Role)).ToList();
 
             return Page();
         }
@@ -98,6 +115,40 @@ namespace Supp.Web.Pages.Projects
 
             return new JsonResult("Ok");
         }
+
+        public async Task<IActionResult> OnPostAddRole([FromBody] NewRoleInfo roleInfo)
+        {
+            Project = await projectService.GetAsync(roleInfo.ProjectId);
+            if (Project == null)
+                return NotFound();
+
+            if (!permissionService.Authorize(Permission.ProjectCanModify, Project))
+                return new ForbidResult();
+
+            await projectPermissionService.AddRoleAsync(roleInfo.ProjectId, roleInfo.Role, roleInfo.Username);
+            return new JsonResult("Ok");
+        }
+
+        public async Task<IActionResult> OnPostRemoveRole([FromBody] NewRoleInfo roleInfo)
+        {
+            Project = await projectService.GetAsync(roleInfo.ProjectId);
+            if (Project == null)
+                return NotFound();
+
+            if (!permissionService.Authorize(Permission.ProjectCanModify, Project))
+                return new ForbidResult();
+
+            await projectPermissionService.RemoveRoleAsync(roleInfo.ProjectId, roleInfo.Role, roleInfo.Username);
+            return new JsonResult("Ok");
+        }
+
+        public class NewRoleInfo
+        {
+            public int ProjectId { get; set; }
+            public string Username { get; set; }
+            public Role Role { get; set; }
+        }
+
         public class TagInfo
         {
             public int ProjectId { get; set; }

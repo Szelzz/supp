@@ -1,9 +1,7 @@
 ﻿using Supp.Core.Projects;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Supp.Core.Authorization
 {
@@ -13,15 +11,27 @@ namespace Supp.Core.Authorization
         User = 2,
 
         // resource based
+
+        [Display(Name = "Właściciel projektu")]
         [ResourceRole(typeof(Project))]
         [PermissionRole(Permission.ProjectCanRead)]
         [PermissionRole(Permission.ProjectCanModify)]
         ProjectOwner = 10,
 
+        [Display(Name = "Właściciel projektu")]
         [PermissionRole(Permission.ProjectCanRead)]
         [ResourceRole(typeof(Project))]
         ProjectVisitor = 11
     }
+
+    public static class RoleHelper
+    {
+        public static Role[] ProjectRoles => new[] {
+            Role.ProjectOwner,
+            Role.ProjectVisitor
+        };
+    }
+
 
     public enum Permission
     {

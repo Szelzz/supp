@@ -40,6 +40,7 @@ namespace Supp.Web
             services.AddScoped<VotingService>();
             services.AddScoped<CommentService>();
             services.AddScoped<SearchService>();
+            services.AddScoped<ProjectPermissionService>();
             services.AddTransient<IScheduler, InMemoryScheduler>();
 
             // modifiers

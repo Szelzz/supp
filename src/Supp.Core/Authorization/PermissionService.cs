@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Supp.Core.Data.EF;
 using Supp.Core.Projects;
 using Supp.Core.Users;
@@ -90,6 +91,35 @@ namespace Supp.Core.Authorization
                 ResourceId = resource?.Id
             };
             dbContext.Add(userRole);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task GrantRoleForUserAsync(User user, Role role, IResource resource = null)
+        {
+            var claims = await userManager.GetClaimsAsync(user);
+            if (claims
+                .Where(c => c.Type == PermissionClaim.ClaimType)
+                .Select(c => new PermissionClaim(c))
+                .Any(c => c.Role == role && c.ResourceId == resource?.Id))
+                return; // already granted
+
+            var userRole = new UserRole()
+            {
+                Role = role,
+                UserId = user.Id,
+                ResourceId = resource?.Id
+            };
+            dbContext.Add(userRole);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveRoleFromUserAsync(User user, Role role, IResource resource = null)
+        {
+            var userRole = await dbContext.UserRoles.FirstOrDefaultAsync(r => r.UserId == user.Id && r.Role == role && r.ResourceId == resource.Id);
+            if (userRole == null)
+                return;
+
+            dbContext.Remove(userRole);
             await dbContext.SaveChangesAsync();
         }
     }
