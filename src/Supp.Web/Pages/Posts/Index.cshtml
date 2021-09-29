@@ -3,8 +3,9 @@
 @using Supp.Core.Resources
 @using Supp.Core.Posts
 @using Supp.Core.Search
-@{
-}
+@using Supp.Web.Security
+@inject AppAuthorizationService authorizationService
+
 <div class="row">
     <div class="col-3 search-menu bg-dark text-white">
         <search search-url="@Url.Page("Index", "search")"
@@ -12,9 +13,9 @@
                 inline-template>
             <div class="d-grid gap-2">
                 <h4>Szukaj</h4>
-                <input type="text" class="form-control" placeholder="tytuł, treść" 
-                       v-model="text" 
-                       v-on:keyup.enter="search"/>
+                <input type="text" class="form-control" placeholder="tytuł, treść"
+                       v-model="text"
+                       v-on:keyup.enter="search" />
                 <h5>
                     Typ
                 </h5>
@@ -58,7 +59,10 @@
     </div>
     <div class="col">
         <a asp-page="./Create" asp-route-projectId="@Model.ProjectId" class="btn btn-outline-primary">Dodaj nowy</a>
-        <a asp-page="../Projects/Details" asp-route-projectId="@Model.ProjectId" class="btn btn-outline-secondary">Ustawienia projektu</a>
+        @if ((await authorizationService.AuthorizePermissionAsync(Supp.Core.Authorization.Permission.ProjectCanModify, Model.Project)).Succeeded)
+        {
+            <a asp-page="../Projects/Details" asp-route-projectId="@Model.ProjectId" class="btn btn-outline-secondary">Ustawienia projektu</a>
+        }
         <post-list inline-template>
             <table class="table details-table">
                 <thead>

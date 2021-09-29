@@ -37,12 +37,13 @@ namespace Supp.Web.Pages.Posts
 
         public IEnumerable<Post> Posts { get; set; }
         public int ProjectId { get; set; }
+        public Project Project { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int projectId)
         {
             ProjectId = projectId;
-            var project = projectService.GetWithPosts(ProjectId);
-            var result = await authorizationService.AuthorizePermissionAsync(Permission.ProjectCanRead, project);
+            Project = projectService.GetWithPosts(ProjectId);
+            var result = await authorizationService.AuthorizePermissionAsync(Permission.ProjectCanRead, Project);
             if (!result.Succeeded)
                 return new ForbidResult();
 

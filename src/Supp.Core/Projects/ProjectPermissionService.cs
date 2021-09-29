@@ -24,15 +24,15 @@ namespace Supp.Core.Projects
             this.permissionService = permissionService;
         }
 
-        public async Task AddRoleAsync(int projectId, Role role, string username)
+        public async Task<bool> AddRoleAsync(int projectId, Role role, string username)
         {
             var project = dbContext.Projects.Find(projectId);
             var user = dbContext.Users.FirstOrDefault(u => u.UserName == username);
 
             if (project == null || user == null)
-                return;
+                return false;
 
-            await permissionService.GrantRoleForUserAsync(user, role, project);
+            return await permissionService.GrantRoleForUserAsync(user, role, project);
         }
 
         public async Task RemoveRoleAsync(int projectId, Role role, string username)

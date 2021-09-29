@@ -11,11 +11,14 @@
 </h2>
 
 <h3>Uprawnienia</h3>
-<project-permission-settings :user-roles="@Json.Serialize(Model.UserRoles)"
+<project-permission-settings :project-id="@Model.Project.Id"
+                             current-user="@User.Identity.Name"
+                             :user-roles="@Json.Serialize(Model.UserRoles).ToString()"
                              :roles="@SerializationHelpers.GetProjectRoles()"
                              add-url="@Url.Page("Details", "AddRole")"
                              remove-url="@Url.Page("Details", "RemoveRole")">
 </project-permission-settings>
+
 
 <h3>
     Tagi

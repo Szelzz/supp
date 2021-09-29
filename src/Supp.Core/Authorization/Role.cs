@@ -18,7 +18,7 @@ namespace Supp.Core.Authorization
         [PermissionRole(Permission.ProjectCanModify)]
         ProjectOwner = 10,
 
-        [Display(Name = "Właściciel projektu")]
+        [Display(Name = "Członek projektu")]
         [PermissionRole(Permission.ProjectCanRead)]
         [ResourceRole(typeof(Project))]
         ProjectVisitor = 11

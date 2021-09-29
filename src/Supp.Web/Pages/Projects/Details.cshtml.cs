@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -125,8 +125,14 @@ namespace Supp.Web.Pages.Projects
             if (!permissionService.Authorize(Permission.ProjectCanModify, Project))
                 return new ForbidResult();
 
-            await projectPermissionService.AddRoleAsync(roleInfo.ProjectId, roleInfo.Role, roleInfo.Username);
-            return new JsonResult("Ok");
+            var success = await projectPermissionService.AddRoleAsync(roleInfo.ProjectId, roleInfo.Role, roleInfo.Username);
+            if (success)
+                return new JsonResult("Ok");
+            else
+                return new JsonResult("Nierawidłowe dane")
+                {
+                    StatusCode = 500
+                };
         }
 
         public async Task<IActionResult> OnPostRemoveRole([FromBody] NewRoleInfo roleInfo)

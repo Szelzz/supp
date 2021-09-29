@@ -94,14 +94,14 @@ namespace Supp.Core.Authorization
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task GrantRoleForUserAsync(User user, Role role, IResource resource = null)
+        public async Task<bool> GrantRoleForUserAsync(User user, Role role, IResource resource = null)
         {
             var claims = await userManager.GetClaimsAsync(user);
             if (claims
                 .Where(c => c.Type == PermissionClaim.ClaimType)
                 .Select(c => new PermissionClaim(c))
                 .Any(c => c.Role == role && c.ResourceId == resource?.Id))
-                return; // already granted
+                return false; // already granted
 
             var userRole = new UserRole()
             {
@@ -111,6 +111,7 @@ namespace Supp.Core.Authorization
             };
             dbContext.Add(userRole);
             await dbContext.SaveChangesAsync();
+            return true;
         }
 
         public async Task RemoveRoleFromUserAsync(User user, Role role, IResource resource = null)

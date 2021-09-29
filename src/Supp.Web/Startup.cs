@@ -21,6 +21,7 @@ using Supp.Web.Infrastructure;
 using Supp.Web.Infrastructure.DependencyInjection;
 using Supp.Web.Security;
 using System;
+using System.Text.Json.Serialization;
 
 namespace Supp.Web
 {
@@ -56,7 +57,11 @@ namespace Supp.Web
 
             // Asp specific
             services.AddRouting(o => { o.LowercaseUrls = true; o.LowercaseQueryStrings = true; });
-            services.AddRazorPages();
+            services.AddRazorPages()
+                .AddJsonOptions(c=>
+            {
+                c.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
             services.AddHttpContextAccessor();
             services.AddTransient(f => f.GetService<IHttpContextAccessor>().HttpContext.User);
 

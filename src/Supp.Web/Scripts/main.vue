@@ -6,6 +6,7 @@
     import Search from './Components/Post/Search.vue'
     import PostList from './Components/Post/PostList.vue'
     import ProjectTagsEditable from './Components/Editables/ProjectTagsEditable.vue'
+    import ProjectPermissionSettings from './Components/Editables/ProjectPermissionSettings.vue'
 
     export default {
         el: '#app',
@@ -16,7 +17,8 @@
             Comments,
             Search,
             PostList,
-            ProjectTagsEditable
+            ProjectTagsEditable,
+            ProjectPermissionSettings
         }
     }
 </script>

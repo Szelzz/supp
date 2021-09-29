@@ -12,6 +12,11 @@ export default {
             },
             body: JSON.stringify(data)
         })
+            .then(r => {
+                if (r.ok)
+                    return r;
+                throw Error(r);
+            })
             .then(r => r.json())
             .then(json => {
                 onSuccess(json);
