@@ -10,7 +10,7 @@
     </editable>
 </h2>
 
-<h3>Uprawnienia</h3>
+<h4>Uprawnienia</h4>
 <project-permission-settings :project-id="@Model.Project.Id"
                              current-user="@User.Identity.Name"
                              :user-roles="@Json.Serialize(Model.UserRoles).ToString()"
@@ -20,9 +20,9 @@
 </project-permission-settings>
 
 
-<h3>
+<h4>
     Tagi
-</h3>
+</h4>
 <project-tags-editable :tags="@SerializationHelpers.TagsToJson( Model.Project.Tags)"
                        :project-id="@Model.Project.Id"
                        add-url="@Url.Page("Details", "TagAdd")"

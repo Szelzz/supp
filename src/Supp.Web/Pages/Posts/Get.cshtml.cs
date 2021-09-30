@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Supp.Core;
+using Supp.Core.Authorization;
 using Supp.Core.Comments;
 using Supp.Core.Modifier;
 using Supp.Core.Posts;
@@ -19,21 +20,21 @@ namespace Supp.Web.Pages.Posts
     {
         private readonly PostService postService;
         private readonly TagService tagService;
-        private readonly AppAuthorizationService authorizationService;
+        private readonly PermissionService permissionService;
         private readonly UniversalModelModifier modelModifier;
         private readonly VotingService votingService;
         private readonly CommentService commentService;
 
         public GetModel(PostService postService,
             TagService tagService,
-            AppAuthorizationService authorizationService,
+            PermissionService permissionService,
             UniversalModelModifier modelModifier,
             VotingService votingService,
             CommentService commentService)
         {
             this.postService = postService;
             this.tagService = tagService;
-            this.authorizationService = authorizationService;
+            this.permissionService = permissionService;
             this.modelModifier = modelModifier;
             this.votingService = votingService;
             this.commentService = commentService;

@@ -20,14 +20,37 @@ namespace Supp.Core.Search
 
         public Task<List<Post>> SearchAsync(SearchQuery searchQuery)
         {
+            // Tags
+
             var query = dbContext.Posts
                 .Where(p =>
                     p.ProjectId == searchQuery.ProjectId);
             if (!string.IsNullOrEmpty(searchQuery.Text))
             {
-                query = query.Where(p =>
-                    p.Title.Contains(searchQuery.Text) ||
-                    p.Body.Contains(searchQuery.Text));
+                var searchWords = searchQuery.Text.Split(" ").ToList();
+                var searchText = "";
+                var tags = new List<string>();
+                foreach (var word in searchWords)
+                {
+                    if (word.StartsWith('#') && word.Length > 1)
+                    {
+                        tags.Add(word[1..]);
+                    }
+                    else
+                    {
+                        searchText += " " + word;
+                    }
+                }
+                searchText = searchText.Trim();
+                if (searchText.Length > 0)
+                {
+                    query = query.Where(p =>
+                        p.Title.Contains(searchText) ||
+                        p.Body.Contains(searchText));
+                }
+
+                if (tags.Count > 0)
+                    query = query.Where(p => p.Tags.Any(t => tags.Contains(t.Tag.Name)));
             }
 
             query = query.Where(p =>
