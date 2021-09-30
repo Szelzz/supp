@@ -1,5 +1,5 @@
 ﻿<template>
-    <span style="display:block" class="editable-area d-flex" ref="editableArea">
+    <span style="display: block; white-space: normal" class="editable-area d-flex" ref="editableArea">
         <span class="flex-fill">
             <span id="title-display" v-show="!editMode">{{ value }}</span>
 
