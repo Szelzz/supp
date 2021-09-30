@@ -6,6 +6,7 @@
 @using Supp.Web.Security
 @inject AppAuthorizationService authorizationService
 
+<h2>@Model.Project.Name</h2>
 <div class="row">
     <div class="col-3 search-menu bg-dark text-white">
         <search search-url="@Url.Page("Index", "search")"
