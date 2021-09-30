@@ -3,7 +3,7 @@
         <div class="flex-fill">
             <span v-show="!editMode">
                 <i v-if="currentTags.length == 0">
-                    brak przypisanych tagów
+                    brak przypisanych kategorii
                 </i>
                 <span v-for="tag in currentTags">#{{ tag }} </span>
             </span>

@@ -2,7 +2,7 @@
     <div>
         <div>
             <div class="input-group mb-3">
-                <input v-model="newTag" type="text" class="form-control" placeholder="Nazwa tagu">
+                <input v-model="newTag" type="text" class="form-control" placeholder="Nazwa kategorii">
                 <button @click="addTag" class="btn btn-outline-secondary" type="button" id="button-addon2">Dodaj</button>
             </div>
         </div>
