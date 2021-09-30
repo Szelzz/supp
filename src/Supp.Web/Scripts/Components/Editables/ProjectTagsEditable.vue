@@ -1,9 +1,16 @@
 ﻿<template>
     <div>
-        <input v-model="newTag" type="text" />
-        <button @click="addTag">Dodaj</button>
-        <ul>
-            <li v-for="tag in currentTags">{{ tag }}<button @click="removeTag(tag)">X</button> </li>
+        <div>
+            <div class="input-group mb-3">
+                <input v-model="newTag" type="text" class="form-control" placeholder="Nazwa tagu">
+                <button @click="addTag" class="btn btn-outline-secondary" type="button" id="button-addon2">Dodaj</button>
+            </div>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item" v-for="tag in currentTags">
+                {{ tag }}
+                <button class="btn-close float-end" @click="removeTag(tag)"></button>
+            </li>
         </ul>
     </div>
 </template>

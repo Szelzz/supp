@@ -1,25 +1,28 @@
 ﻿<template>
-    <span style="display:block" class="editable-area d-flex" ref="editableArea">
-        <span class="flex-fill">
+    <div class="editable-area d-flex" ref="editableArea">
+        <div class="flex-fill">
             <span v-show="!editMode">
                 <i v-if="currentTags.length == 0">
                     brak przypisanych tagów
                 </i>
                 <span v-for="tag in currentTags">#{{ tag }} </span>
             </span>
-            <span v-show="editMode">
-                <button class="btn btn-sm btn btn-light me-1"
-                        v-for="tag in currentTags"
-                        @click="removeTag(tag)">
-                    #{{ tag }} <i class="fas fa-times"></i>
-                </button>
-
-                <select @change="addTag($event.target.value)" class="">
-                    <option></option>
-                    <option :value="tag" v-for="tag in allTags">{{ tag }}</option>
-                </select>
-            </span>
-        </span>
+            <div v-show="editMode">
+                <div class="d-inline-block">
+                    <button class="btn btn-sm btn-dark me-1"
+                            v-for="tag in currentTags"
+                            @click="removeTag(tag)">
+                        #{{ tag }} <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="d-inline-block">
+                    <select @change="addTag($event.target.value)" class="form-select form-select-sm" style="width:200px">
+                        <option></option>
+                        <option :value="tag" v-for="tag in allTags">{{ tag }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
         <span>
             <button @click="edit" v-show="!editMode" class="btn btn-sm btn-outline-dark" @mouseover="buttonMouseOver" @mouseout="buttonMouseOut">
                 <i class="fas fa-pen-square"></i>
@@ -28,7 +31,7 @@
                 <i class="fas fa-save"></i>
             </button>
         </span>
-    </span>
+    </div>
 </template>
 
 <script>

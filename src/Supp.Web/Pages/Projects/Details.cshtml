@@ -11,20 +11,24 @@
 </h2>
 
 <h4>Uprawnienia</h4>
-<project-permission-settings :project-id="@Model.Project.Id"
-                             current-user="@User.Identity.Name"
-                             :user-roles="@Json.Serialize(Model.UserRoles).ToString()"
-                             :roles="@SerializationHelpers.GetProjectRoles()"
-                             add-url="@Url.Page("Details", "AddRole")"
-                             remove-url="@Url.Page("Details", "RemoveRole")">
-</project-permission-settings>
+<div class="col-md-6">
+    <project-permission-settings :project-id="@Model.Project.Id"
+                                 current-user="@User.Identity.Name"
+                                 :user-roles="@Json.Serialize(Model.UserRoles).ToString()"
+                                 :roles="@SerializationHelpers.GetProjectRoles()"
+                                 add-url="@Url.Page("Details", "AddRole")"
+                                 remove-url="@Url.Page("Details", "RemoveRole")">
+    </project-permission-settings>
+</div>
 
 
 <h4>
     Tagi
 </h4>
-<project-tags-editable :tags="@SerializationHelpers.TagsToJson( Model.Project.Tags)"
-                       :project-id="@Model.Project.Id"
-                       add-url="@Url.Page("Details", "TagAdd")"
-                       remove-url="@Url.Page("Details", "TagRemove")">
-</project-tags-editable>
+<div class="col-md-6">
+    <project-tags-editable :tags="@SerializationHelpers.TagsToJson( Model.Project.Tags)"
+                           :project-id="@Model.Project.Id"
+                           add-url="@Url.Page("Details", "TagAdd")"
+                           remove-url="@Url.Page("Details", "TagRemove")">
+    </project-tags-editable>
+</div>
