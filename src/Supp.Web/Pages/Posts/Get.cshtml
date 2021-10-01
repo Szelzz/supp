@@ -51,6 +51,9 @@
     <h4>Komentarze</h4>
     <comments :post-id="@Model.Post.Id"
               add-url="@Url.Page("Get", "NewComment")"
-              get-all-url="@Url.Page("Get", "AllComments", new { postId = Model.Post.Id })">
+              get-all-url="@Url.Page("Get", "AllComments", new { postId = Model.Post.Id })"
+              pin-comment-url="@Url.Page("Get", "PinComment")"
+              unpin-comment-url="@Url.Page("Get", "UnpinComment")"
+              >
     </comments>
 </div>

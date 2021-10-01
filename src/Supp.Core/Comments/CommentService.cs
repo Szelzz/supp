@@ -44,7 +44,14 @@ namespace Supp.Core.Comments
         public async Task PinComment(Comment comment)
         {
             comment.Pinned = true;
-            dbContext.Attach(comment).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            dbContext.Attach(comment).State = EntityState.Modified;
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task UnpinComment(Comment comment)
+        {
+            comment.Pinned = false;
+            dbContext.Attach(comment).State = EntityState.Modified;
             await dbContext.SaveChangesAsync();
         }
 
@@ -53,11 +60,16 @@ namespace Supp.Core.Comments
             var comments = dbContext.Comments
                 .Include(c => c.Author)
                 .Where(c => c.PostId == postId)
-                .OrderBy(c => c.Pinned)
+                .OrderBy(c => !c.Pinned)
                 .ThenBy(c => c.CreateTime)
                 .ToListAsync();
 
             return comments;
+        }
+
+        public async Task<Comment> GetCommentAsync(int commentId)
+        {
+            return await dbContext.Comments.FindAsync(commentId);
         }
     }
 }

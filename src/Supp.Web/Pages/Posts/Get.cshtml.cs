@@ -111,5 +111,25 @@ namespace Supp.Web.Pages.Posts
             var comment = await commentService.AddCommentAsync(model.PostId, model.Body);
             return new AjaxResponse(new CommentModel(comment));
         }
+
+        public async Task<IActionResult> OnPostPinComment([FromBody] int commentId)
+        {
+            var comment = await commentService.GetCommentAsync(commentId);
+            if (comment == null)
+                return NotFound();
+
+            await commentService.PinComment(comment);
+            return new JsonResult("Ok");
+        }
+
+        public async Task<IActionResult> OnPostUnpinComment([FromBody] int commentId)
+        {
+            var comment = await commentService.GetCommentAsync(commentId);
+            if (comment == null)
+                return NotFound();
+
+            await commentService.UnpinComment(comment);
+            return new JsonResult("Ok");
+        }
     }
 }

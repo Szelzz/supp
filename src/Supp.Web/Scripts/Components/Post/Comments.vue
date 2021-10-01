@@ -1,8 +1,12 @@
 ﻿<template>
     <div>
         <div class="no-data" v-if="!comments">Brak komentarzy</div>
-        <div v-for="comment in comments" class="comment">
-            <div class="text-secondary">{{ comment.createTime }} - {{ comment.author }}</div>
+        <div v-for="comment in commentsSorted" class="comment bg-opacity-10" :class="{ 'bg-warning': comment.pinned }">
+            <div class="text-secondary">
+            {{ comment.createTime }} - {{ comment.author }}
+            <button v-if="comment.pinned" class="btn btn-sm btn-outline-secondary float-end" @click="unpinComment(comment)">Odepnij</button>
+            <button v-else type="button" class="btn btn-sm btn-outline-secondary float-end" @click="pinComment(comment)">Przypnij</button>
+            </div>
             {{ comment.body }}
         </div>
         <textarea class="form-control" v-model="body" required></textarea>
@@ -16,6 +20,8 @@
         props: {
             addUrl: String,
             getAllUrl: String,
+            pinCommentUrl: String,
+            unpinCommentUrl: String,
             postId: Number,
         },
         data() {
@@ -24,10 +30,23 @@
                 comments: []
             }
         },
+        computed: {
+            commentsSorted() {
+                return this.comments.sort(this.compareComments);
+            }
+            },
         created() {
             Ajax.apiRequest(this.getAllUrl, {}, r => this.comments = r.data);
         },
         methods: {
+            compareComments(a, b) {
+                if (a.pinned == b.pinned)
+                    return a.id - b.id;
+                if (a.pinned && !b.pinned)
+                    return -1;
+                if (!a.pinned && b.pinned)
+                    return 1;
+            },
             addComment() {
                 Ajax.apiRequest(this.addUrl, {
                     postId: this.postId,
@@ -40,12 +59,25 @@
             },
             error(response) {
 
+            },
+            pinComment(comment) {
+                Ajax.apiRequest(this.pinCommentUrl,
+                    comment.id);
+                comment.pinned = true;
+                //this.comments = this.comments.slice(0);
+            },
+            unpinComment(comment) {
+                Ajax.apiRequest(this.unpinCommentUrl,
+                    comment.id);
+                comment.pinned = false;
+                //this.comments = this.comments.slice(0);
             }
         }
     }
 </script>
 <style lang="scss">
     .comment {
-        margin: 15px 0;
+        margin: 10px 0;
+        padding: 5px;
     }
 </style>
