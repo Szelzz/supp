@@ -62,7 +62,6 @@
                 this.userRolesList.push({ username: this.username, role: this.role });
 
                 this.username = null;
-                this.role = null;
             },
             removeRole(userRole) {
                 Ajax.apiRequest(
