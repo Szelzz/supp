@@ -11,7 +11,7 @@
 </h2>
 
 <h4>Uprawnienia</h4>
-<div class="col-md-6">
+<div class="col-md-7 mb-3">
     <project-permission-settings :project-id="@Model.Project.Id"
                                  current-user="@User.Identity.Name"
                                  :user-roles="@Json.Serialize(Model.UserRoles).ToString()"
@@ -25,7 +25,7 @@
 <h4>
     Kategorie
 </h4>
-<div class="col-md-6">
+<div class="col-md-7 mb-3">
     <project-tags-editable :tags="@SerializationHelpers.TagsToJson( Model.Project.Tags)"
                            :project-id="@Model.Project.Id"
                            add-url="@Url.Page("Details", "TagAdd")"

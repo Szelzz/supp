@@ -1,16 +1,32 @@
 ﻿<template>
     <div>
-        <input v-model="username" type="text" placeholder="Nazwa użytkownika"/>
-        <select v-model="role">
-            <option v-for="(roleName, role) in roles" :value="role">{{ roleName }}</option>
-        </select>
-        <button @click="addRole">Dodaj</button>
-        <ul>
-            <li v-for="userRole in userRoles">
-                {{ userRole.username }}
-                {{ roles[userRole.role] }}
-                <button @click="removeRole(userRole)" v-if="currentUser != userRole.username">X</button>
-                <span v-else class="text-muted">Nie można usunąć uprawnień samemu sobie</span>
+        <div class="input-group mb-3">
+
+            <input class="form-control" v-model="username" type="text" placeholder="Nazwa użytkownika" />
+            <select class="form-select" v-model="role">
+                <option v-for="(roleName, role) in roles" :value="role">{{ roleName }}</option>
+            </select>
+            <button class="btn btn-outline-secondary" @click="addRole">Dodaj</button>
+        </div>
+
+
+        <ul class="list-group">
+            <li class="list-group-item" v-for="userRole in userRolesList">
+                <div class="row">
+
+                    <div class="col-3">
+                        {{ userRole.username }}
+
+                    </div>
+                    <div class="col">
+                        <div class="vr"></div>
+                        {{ roles[userRole.role] }}
+                    </div>
+                    <div class="col-auto">
+                        <span v-if="currentUser == userRole.username" class="text-muted">Nie można usunąć uprawnień samemu sobie</span>
+                        <button class="btn-close" @click="removeRole(userRole)" v-if="currentUser != userRole.username"></button>
+                    </div>
+                </div>
             </li>
         </ul>
 
@@ -30,7 +46,8 @@
         data() {
             return {
                 username: "",
-                role: "",
+                role: "ProjectVisitor",
+                userRolesList: this.userRoles
             }
         },
         created() {
@@ -42,7 +59,7 @@
                     this.addRoleSuccess);
             },
             addRoleSuccess(response) {
-                this.userRoles.push({ username: this.username, role: this.role });
+                this.userRolesList.push({ username: this.username, role: this.role });
 
                 this.username = null;
                 this.role = null;
@@ -56,9 +73,9 @@
             removeRoleSuccessGenerator(userRole) {
                 const model = this;
                 return function (response) {
-                    const index = model.userRoles.indexOf(userRole);
+                    const index = model.userRolesList.indexOf(userRole);
                     if (index > -1) {
-                        model.userRoles.splice(index, 1);
+                        model.userRolesList.splice(index, 1);
                     }
                 }
             }
