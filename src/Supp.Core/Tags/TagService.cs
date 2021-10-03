@@ -25,10 +25,10 @@ namespace Supp.Core.Tags
 
         public async Task<string> AddToProjectAsync(int projectId, string tagName)
         {
-            if (tagName == null)
+            if (string.IsNullOrWhiteSpace(tagName))
                 return null;
 
-            var normalizedName = Regex.Replace(tagName.ToLower(), "[^a-z]", "");
+            var normalizedName = Regex.Replace(tagName.ToLower(), "[^a-z-]", "");
             if (dbContext.Tags.Any(t => t.ProjectId == projectId && t.Name == normalizedName))
                 return null;
 
@@ -43,7 +43,7 @@ namespace Supp.Core.Tags
             return normalizedName;
         }
 
-        public async Task RemoveTag(int projectId, string tagName)
+        public async Task RemoveTagAsync(int projectId, string tagName)
         {
             var tag = dbContext.Tags.FirstOrDefault(t => t.Name == tagName && t.ProjectId == projectId);
             if (tag == null)

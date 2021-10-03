@@ -111,7 +111,7 @@ namespace Supp.Web.Pages.Projects
                 return new ForbidResult();
 
 
-            await tagService.RemoveTag(tagInfo.ProjectId, tagInfo.TagName);
+            await tagService.RemoveTagAsync(tagInfo.ProjectId, tagInfo.TagName);
 
             return new JsonResult("Ok");
         }
