@@ -1,5 +1,10 @@
 ﻿<script>
+    import PostIcon from './PostIcon.vue'
+
     export default {
+        components: {
+            PostIcon
+        },
         props: {
             searchUrl: String,
             projectId: Number,

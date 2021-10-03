@@ -78,9 +78,9 @@
 
                 <tbody>
                     <tr v-for="post in posts" :data-post-id="post.id">
-                        <td>{{ post.type }}</td>
-                        <td>{{ post.priority }}</td>
-                        <td>{{ post.status }}</td>
+                        <td><post-icon :type="post.type"></post-icon></td>
+                        <td><post-icon :priority="post.priority"></post-icon></td>
+                        <td>{{ [post.status] }}</td>
                         <td>{{ post.votes }}</td>
                         <td>
                             <a :href="'@Url.Page("Get")?id=' + post.id">{{ post.title }}</a>
