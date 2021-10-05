@@ -30,5 +30,18 @@ namespace Supp.Web.HtmlHelpers
             json.Append('}');
             return json.ToString();
         }
+
+        public static Dictionary<string, string> EnumToNamedDictionary(Type enumType)
+        {
+            var dict = new Dictionary<string, string>();
+            foreach (var enumName in Enum.GetNames(enumType))
+            {
+                var member = enumType.GetMember(enumName)[0];
+                var name = member.GetCustomAttribute<DisplayAttribute>()?.Name ?? enumName;
+                dict.Add(enumName, name);
+            }
+            return dict;
+        }
+
     }
 }
