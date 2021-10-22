@@ -11,9 +11,9 @@ namespace Supp.Web.HtmlHelpers
         {
             return postType switch
             {
-                PostType.Error => new HtmlString("<i class=\"fas fa-bug\"></i>"),
-                PostType.Enhancement => new HtmlString("<i class=\"fas fa-angle-double-up\"></i>"),
-                PostType.Task => new HtmlString("<i class=\"fas fa-clipboard-check\"></i>"),
+                PostType.Error => new HtmlString("<i class=\"fas fa-fw fa-bug\"></i>"),
+                PostType.Enhancement => new HtmlString("<i class=\"fas fa-fw fa-angle-double-up\"></i>"),
+                PostType.Task => new HtmlString("<i class=\"fas fa-fw fa-clipboard-check\"></i>"),
                 _ => new HtmlString(null),
             };
         }
@@ -22,10 +22,10 @@ namespace Supp.Web.HtmlHelpers
         {
             return postPriority switch
             {
-                PostPriority.Unset => new HtmlString("<i class=\"far fa-square\"></i>"),
-                PostPriority.Unimportant => new HtmlString("<i class=\"fas fa-arrow-down\"></i>"),
-                PostPriority.Normal => new HtmlString("<i class=\"fas fa-check\"></i>"),
-                PostPriority.Important => new HtmlString("<i class=\"fas fa-clipboard-exclamation\"></i>"),
+                PostPriority.Unset => new HtmlString("<i class=\"far fa-fw fa-square\"></i>"),
+                PostPriority.Unimportant => new HtmlString("<i class=\"fas fa-fw fa-arrow-down\"></i>"),
+                PostPriority.Normal => new HtmlString("<i class=\"fas fa-fw fa-check\"></i>"),
+                PostPriority.Important => new HtmlString("<i class=\"fas fa-fw fa-exclamation\"></i>"),
                 _ => new HtmlString(null),
             };
         }
