@@ -26,7 +26,7 @@
     Kategorie
 </h4>
 <div class="col-md-7 mb-3">
-    <project-tags-editable :tags="@SerializationHelpers.TagsToJson( Model.Project.Tags)"
+    <project-tags-editable :tags="@Json.Serialize(Model.Project.Tags.Select(t=>t.Name)).ToString()"
                            :project-id="@Model.Project.Id"
                            add-url="@Url.Page("Details", "TagAdd")"
                            remove-url="@Url.Page("Details", "TagRemove")">
