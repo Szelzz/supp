@@ -15,6 +15,8 @@
     </div>
 </template>
 <script>
+    import Ajax from '../../Ajax'
+
     export default {
         props: {
             initVoted: Boolean,
@@ -30,38 +32,16 @@
         },
         methods: {
             vote() {
-                fetch(this.voteUrl,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        cache: 'no-cache',
-                        body: {}
-                    }
-                )
-                    .then(r => r.json())
-                    .then(this.votedSuccess)
+                Ajax.apiRequest(this.voteUrl, {}, this.votedSuccess);
             },
             undo() {
-                fetch(this.undoUrl,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        cache: 'no-cache',
-                        body: {}
-                    }
-                )
-                    .then(r => r.json())
-                    .then(this.udnoSuccess)
+                Ajax.apiRequest(this.undoUrl, {}, this.undoSuccess);
             },
             votedSuccess() {
                 this.voted = true;
                 this.votes++;
             },
-            udnoSuccess() {
+            undoSuccess() {
                 this.voted = false;
                 this.votes--;
             }
@@ -77,14 +57,11 @@
         width: 80px;
         position: absolute;
         left: -90px;
-        .placeholder
 
-    {
-        font-size: $upvoteSize;
+        .placeholder {
+            font-size: $upvoteSize;
+        }
     }
-
-    }
-
 
     .btn-vote {
         font-size: $upvoteSize;
@@ -100,8 +77,8 @@
         padding: 5px 0;
     }
 
-        .votes.voted {
-            background-color: $primary;
-            color: $white;
-        }
+    .votes.voted {
+        background-color: $primary;
+        color: $white;
+    }
 </style>
