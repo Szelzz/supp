@@ -1,11 +1,11 @@
 ﻿<template>
     <div>
         <div class="no-data" v-if="!comments">Brak komentarzy</div>
-        <div v-for="comment in commentsSorted" class="comment bg-opacity-10" :class="{ 'bg-warning': comment.pinned }">
+        <div v-for="comment in commentsSorted" class="comment bg-opacity-10" :class="{ 'pinned': comment.pinned }">
             <div class="text-secondary">
-            {{ comment.createTime }} - {{ comment.author }}
-            <button v-if="comment.pinned" class="btn btn-sm btn-outline-secondary float-end" @click="unpinComment(comment)">Odepnij</button>
-            <button v-else type="button" class="btn btn-sm btn-outline-secondary float-end" @click="pinComment(comment)">Przypnij</button>
+                {{ comment.createTime }} - {{ comment.author }}
+                <button v-if="comment.pinned" class="btn btn-sm btn-outline-secondary float-end" @click="unpinComment(comment)"><i class="fas fa-times"></i></button>
+                <button v-else type="button" class="btn btn-sm btn-outline-secondary float-end" @click="pinComment(comment)"><i class="fas fa-thumbtack"></i></button>
             </div>
             {{ comment.body }}
         </div>
@@ -34,7 +34,7 @@
             commentsSorted() {
                 return this.comments.sort(this.compareComments);
             }
-            },
+        },
         created() {
             Ajax.apiRequest(this.getAllUrl, {}, r => this.comments = r.data);
         },
@@ -64,20 +64,25 @@
                 Ajax.apiRequest(this.pinCommentUrl,
                     comment.id);
                 comment.pinned = true;
-                //this.comments = this.comments.slice(0);
             },
             unpinComment(comment) {
                 Ajax.apiRequest(this.unpinCommentUrl,
                     comment.id);
                 comment.pinned = false;
-                //this.comments = this.comments.slice(0);
             }
         }
     }
 </script>
 <style lang="scss">
+    @import '../../../Styles/colors.scss';
+
     .comment {
         margin: 10px 0;
         padding: 5px;
+
+        &.pinned {
+            border: 3px solid $success;
+            border-radius: 0.25rem;
+        }
     }
 </style>
