@@ -1,7 +1,7 @@
 ﻿const afToken = document.getElementById('RequestVerificationToken').value;
 
 function apiRequest(url, data, onSuccess, onError) {
-    return fetch(url, getFetchDefaults())
+    return fetch(url, getFetchDefaults(JSON.stringify(data)))
         .then(r => {
             if (r.ok)
                 return r;
@@ -17,7 +17,7 @@ function apiRequest(url, data, onSuccess, onError) {
         });
 }
 
-function getFetchDefaults() {
+function getFetchDefaults(data) {
     return {
         method: 'POST',
         credentials: 'same-origin',
@@ -26,6 +26,7 @@ function getFetchDefaults() {
             'Content-Type': 'application/json',
             'RequestVerificationToken': afToken,
         },
+        body: data
     };
 }
 
