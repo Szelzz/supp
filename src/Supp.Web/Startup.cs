@@ -19,7 +19,6 @@ using Supp.Core.Users;
 using Supp.Core.Voting;
 using Supp.Web.Infrastructure;
 using Supp.Web.Infrastructure.DependencyInjection;
-using Supp.Web.Security;
 using System;
 using System.Text.Json.Serialization;
 
@@ -50,15 +49,12 @@ namespace Supp.Web
             services.AddScoped<IModelModifier, PostTagsModifier>();
 
             // Security
-            services.AddScoped<AppAuthorizationService>();
             services.AddAuthorization();
-            services.AddScoped<IAuthorizationHandler, ResourceAuthorizationHandler>();
-            services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
             // Asp specific
             services.AddRouting(o => { o.LowercaseUrls = true; o.LowercaseQueryStrings = true; });
             services.AddRazorPages()
-                .AddJsonOptions(c=>
+                .AddJsonOptions(c =>
             {
                 c.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });

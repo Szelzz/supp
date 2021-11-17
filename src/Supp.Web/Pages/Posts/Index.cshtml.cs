@@ -10,7 +10,6 @@ using Supp.Core.Posts;
 using Supp.Core.Projects;
 using Supp.Core.Search;
 using Supp.Core.Voting;
-using Supp.Web.Security;
 
 namespace Supp.Web.Pages.Posts
 {
@@ -18,19 +17,19 @@ namespace Supp.Web.Pages.Posts
     {
         private readonly PostService postServce;
         private readonly ProjectService projectService;
-        private readonly AppAuthorizationService authorizationService;
+        private readonly PermissionService permissionService;
         private readonly VotingService votingService;
         private readonly SearchService searchService;
 
         public ListModel(PostService postServce,
             ProjectService projectService,
-            AppAuthorizationService authorizationService,
+            PermissionService permissionService,
             VotingService votingService,
             SearchService searchService)
         {
             this.postServce = postServce;
             this.projectService = projectService;
-            this.authorizationService = authorizationService;
+            this.permissionService = permissionService;
             this.votingService = votingService;
             this.searchService = searchService;
         }
@@ -43,8 +42,8 @@ namespace Supp.Web.Pages.Posts
         {
             ProjectId = projectId;
             Project = projectService.GetWithPosts(ProjectId);
-            var result = await authorizationService.AuthorizePermissionAsync(Permission.ProjectCanRead, Project);
-            if (!result.Succeeded)
+            var result = permissionService.Authorize(Permission.ProjectCanRead, Project);
+            if (!result)
                 return new ForbidResult();
 
             Posts = await postServce.GetForProjectAsync(projectId);
@@ -54,8 +53,8 @@ namespace Supp.Web.Pages.Posts
         public async Task<IActionResult> OnPostSearchAsync([FromBody] SearchQuery searchQuery)
         {
             var project = projectService.GetWithPosts(searchQuery.ProjectId);
-            var result = await authorizationService.AuthorizePermissionAsync(Permission.ProjectCanRead, project);
-            if (!result.Succeeded)
+            var result = permissionService.Authorize(Permission.ProjectCanRead, project);
+            if (!result)
                 return new ForbidResult();
 
             var posts = await searchService.SearchAsync(searchQuery);

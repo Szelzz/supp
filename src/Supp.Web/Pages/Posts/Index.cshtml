@@ -3,8 +3,8 @@
 @using Supp.Core.Resources
 @using Supp.Core.Posts
 @using Supp.Core.Search
-@using Supp.Web.Security
-@inject AppAuthorizationService authorizationService
+@using Supp.Core.Authorization
+@inject PermissionService permissionService
 
 <h2>@Model.Project.Name</h2>
 <div class="row">
@@ -60,7 +60,7 @@
     </div>
     <div class="col">
         <a asp-page="./Create" asp-route-projectId="@Model.ProjectId" class="btn btn-outline-primary">Dodaj nowy</a>
-        @if ((await authorizationService.AuthorizePermissionAsync(Supp.Core.Authorization.Permission.ProjectCanModify, Model.Project)).Succeeded)
+        @if (permissionService.Authorize(Supp.Core.Authorization.Permission.ProjectCanModify, Model.Project))
         {
             <a asp-page="../Projects/Details" asp-route-projectId="@Model.ProjectId" class="btn btn-outline-secondary">Ustawienia projektu</a>
         }

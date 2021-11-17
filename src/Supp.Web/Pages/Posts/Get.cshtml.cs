@@ -11,7 +11,6 @@ using Supp.Core.Modifier;
 using Supp.Core.Posts;
 using Supp.Core.Tags;
 using Supp.Core.Voting;
-using Supp.Web.Security;
 
 namespace Supp.Web.Pages.Posts
 {
