@@ -53,7 +53,7 @@ namespace Supp.Core.Projects
         {
             return dbContext.UserRoles
                 .Include(r => r.User)
-                .Where(r => r.ResourceId == projectId)
+                .Where(r => r.ProjectId == projectId)
                 .ToListAsync();
         }
     }

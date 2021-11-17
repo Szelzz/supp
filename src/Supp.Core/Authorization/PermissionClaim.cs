@@ -14,7 +14,7 @@ namespace Supp.Core.Authorization
             : base(ClaimType, GetValue(role))
         {
             Role = role.Role;
-            ResourceId = role.ResourceId;
+            ProjectId = role.ProjectId;
         }
 
         public PermissionClaim(Claim claim)
@@ -29,14 +29,14 @@ namespace Supp.Core.Authorization
 
             Role = (Role)Enum.Parse(typeof(Role), match.Groups[1].Value);
             if (match.Groups[1].Value != null)
-                ResourceId = int.Parse(match.Groups[2].Value);
+                ProjectId = int.Parse(match.Groups[2].Value);
         }
 
 
         public Role Role { get; }
-        public int? ResourceId { get; }
+        public int? ProjectId { get; }
 
         private static string GetValue(UserRole role)
-            => $"Role:{role.Role};ResourceId:{role.ResourceId}";
+            => $"Role:{role.Role};ResourceId:{role.ProjectId}";
     }
 }

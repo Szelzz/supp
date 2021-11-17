@@ -16,6 +16,6 @@ namespace Supp.Core.Users
         public string UserId { get; set; }
         public User User { get; set; }
 
-        public int? ResourceId { get; set; }
+        public int? ProjectId { get; set; }
     }
 }

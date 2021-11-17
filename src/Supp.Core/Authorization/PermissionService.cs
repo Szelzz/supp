@@ -44,7 +44,7 @@ namespace Supp.Core.Authorization
             }
         }
 
-        public bool Authorize(Permission permission, IResource resource = null)
+        public bool Authorize(Permission permission, Project resource = null)
         {
             foreach (var claim in user.Claims.Where(c => c.Type == PermissionClaim.ClaimType))
             {
@@ -52,7 +52,7 @@ namespace Supp.Core.Authorization
                 if (!rolePermissionsMap[permissionClaim.Role].Any(p => p == permission))
                     continue;
 
-                if (permissionClaim.ResourceId == resource?.Id)
+                if (permissionClaim.ProjectId == resource?.Id)
                     return true;
             }
             return false;
@@ -69,54 +69,54 @@ namespace Supp.Core.Authorization
                     continue;
                 foreach (var resource in resources)
                 {
-                    if (permissionClaim.ResourceId == resource?.Id)
+                    if (permissionClaim.ProjectId == resource?.Id)
                         collection.Add(resource);
                 }
             }
             return collection.Distinct();
         }
 
-        public async Task GrantRoleAsync(Role role, IResource resource = null)
+        public async Task GrantRoleAsync(Role role, Project resource = null)
         {
             if (user.Claims
                 .Where(c => c.Type == PermissionClaim.ClaimType)
                 .Select(c => new PermissionClaim(c))
-                .Any(c => c.Role == role && c.ResourceId == resource?.Id))
+                .Any(c => c.Role == role && c.ProjectId == resource?.Id))
                 return; // already granted
 
             var userRole = new UserRole()
             {
                 Role = role,
                 UserId = userManager.GetUserId(user),
-                ResourceId = resource?.Id
+                ProjectId = resource?.Id
             };
             dbContext.Add(userRole);
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<bool> GrantRoleForUserAsync(User user, Role role, IResource resource = null)
+        public async Task<bool> GrantRoleForUserAsync(User user, Role role, Project resource = null)
         {
             var claims = await userManager.GetClaimsAsync(user);
             if (claims
                 .Where(c => c.Type == PermissionClaim.ClaimType)
                 .Select(c => new PermissionClaim(c))
-                .Any(c => c.Role == role && c.ResourceId == resource?.Id))
+                .Any(c => c.Role == role && c.ProjectId == resource?.Id))
                 return false; // already granted
 
             var userRole = new UserRole()
             {
                 Role = role,
                 UserId = user.Id,
-                ResourceId = resource?.Id
+                ProjectId = resource?.Id
             };
             dbContext.Add(userRole);
             await dbContext.SaveChangesAsync();
             return true;
         }
 
-        public async Task RemoveRoleFromUserAsync(User user, Role role, IResource resource = null)
+        public async Task RemoveRoleFromUserAsync(User user, Role role, Project resource = null)
         {
-            var userRole = await dbContext.UserRoles.FirstOrDefaultAsync(r => r.UserId == user.Id && r.Role == role && r.ResourceId == resource.Id);
+            var userRole = await dbContext.UserRoles.FirstOrDefaultAsync(r => r.UserId == user.Id && r.Role == role && r.ProjectId == resource.Id);
             if (userRole == null)
                 return;
 
