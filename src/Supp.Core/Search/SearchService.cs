@@ -27,7 +27,7 @@ namespace Supp.Core.Search
                     p.ProjectId == searchQuery.ProjectId);
             if (!string.IsNullOrEmpty(searchQuery.Text))
             {
-                var searchWords = searchQuery.Text.Split(" ").ToList();
+                var searchWords = searchQuery.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
                 var searchText = "";
                 var tags = new List<string>();
                 foreach (var word in searchWords)
