@@ -69,7 +69,10 @@ namespace Supp.Core.Comments
 
         public async Task<Comment> GetCommentAsync(int commentId)
         {
-            return await dbContext.Comments.FindAsync(commentId);
+            return await dbContext.Comments
+                .Include(c => c.Post)
+                .ThenInclude(c => c.Project)
+                .FirstOrDefaultAsync(c => c.Id == commentId);
         }
     }
 }

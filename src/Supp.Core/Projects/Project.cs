@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Supp.Core.Projects
 {
-    public class Project : IResource
+    public class Project
     {
         public int Id { get; set; }
         public bool Archived { get; set; }

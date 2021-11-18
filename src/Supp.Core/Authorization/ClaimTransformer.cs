@@ -20,6 +20,7 @@ namespace Supp.Core.Authorization
             this.dbContext = dbContext;
             this.userManager = userManager;
         }
+
         public async Task<ClaimsPrincipal> TransformAsync(ClaimsPrincipal principal)
         {
             var newPrincipal = principal.Clone();

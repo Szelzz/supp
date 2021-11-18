@@ -58,6 +58,12 @@ namespace Supp.Core.Data.EF
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Post>()
+                .HasOne(c => c.Author)
+                .WithMany()
+                .HasForeignKey(c => c.AuthorId)
+                .IsRequired(false);
+
+            modelBuilder.Entity<Post>()
                 .HasOne(p => p.Project)
                 .WithMany(p => p.Posts)
                 .HasForeignKey(p => p.ProjectId)

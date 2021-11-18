@@ -16,10 +16,18 @@ namespace Supp.Core.Authorization
         [ResourceRole(typeof(Project))]
         [PermissionRole(Permission.ProjectCanRead)]
         [PermissionRole(Permission.ProjectCanModify)]
+        [PermissionRole(Permission.PostCanRead)]
+        [PermissionRole(Permission.PostCanModify)]
+        [PermissionRole(Permission.PostCanVote)]
+        [PermissionRole(Permission.CommentCanAdd)]
+        [PermissionRole(Permission.CommentCanPin)]
         ProjectOwner = 10,
 
         [Display(Name = "Członek projektu")]
         [PermissionRole(Permission.ProjectCanRead)]
+        [PermissionRole(Permission.PostCanRead)]
+        [PermissionRole(Permission.PostCanVote)]
+        [PermissionRole(Permission.CommentCanAdd)]
         [ResourceRole(typeof(Project))]
         ProjectVisitor = 11
     }
@@ -32,12 +40,19 @@ namespace Supp.Core.Authorization
         };
     }
 
-
     public enum Permission
     {
         // Project resource
         ProjectCanRead,
-        ProjectCanModify
+        ProjectCanModify,
+
+        PostCanRead,
+        PostCanModify,
+        PostCanVote,
+
+        CommentCanAdd,
+        CommentCanRemove,
+        CommentCanPin
     }
 
     [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]

@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Supp.Core.Authorization
@@ -19,6 +18,11 @@ namespace Supp.Core.Authorization
         private readonly ClaimsPrincipal user;
         private readonly ApplicationDbContext dbContext;
         private readonly UserManager<User> userManager;
+        private readonly Permission[] allowedForAuthor = new[]
+        {
+            Permission.PostCanModify,
+            Permission.CommentCanRemove,
+        };
 
         static PermissionService()
         {
@@ -58,10 +62,20 @@ namespace Supp.Core.Authorization
             return false;
         }
 
-        public IEnumerable<T> AuthorizeCollection<T>(Permission permission, IEnumerable<T> resources)
-            where T : IResource
+        public bool Authorize(Permission permission, IProjectResource projectResource)
         {
-            var collection = new List<T>();
+            // allow all permissions if current user is author of post
+            if (projectResource.GetAuthorId() == userManager.GetUserId(user) && allowedForAuthor.Contains(permission))
+            {
+                return Authorize(Permission.ProjectCanRead, projectResource.GetProject());
+            }
+
+            return Authorize(permission, projectResource.GetProject());
+        }
+
+        public IEnumerable<Project> AuthorizeCollection(Permission permission, IEnumerable<Project> resources)
+        {
+            var collection = new List<Project>();
             foreach (var claim in user.Claims.Where(c => c.Type == PermissionClaim.ClaimType))
             {
                 var permissionClaim = new PermissionClaim(claim);

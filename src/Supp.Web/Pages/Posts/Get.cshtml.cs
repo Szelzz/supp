@@ -50,25 +50,23 @@ namespace Supp.Web.Pages.Posts
             if (Post == null)
                 return NotFound();
 
+            if (!permissionService.Authorize(Permission.PostCanRead, Post))
+                return Unauthorized();
+
             AllowedTags = await tagService.GetForProjectAsync(Post.ProjectId);
             Votes = await votingService.CountVotesAsync(Post);
             UserVoted = await votingService.UserVoted(Post);
 
             return Page();
         }
-
-        public async Task<IActionResult> OnPostComment(int postId, Comment comment)
-        {
-            comment.Id = 0;
-            await postService.AddCommentAsync(postId, comment);
-            return RedirectToPage("Get", new { id = postId });
-        }
-
         public async Task<IActionResult> OnPostEdit([FromBody] EditData model)
         {
             var post = await postService.GetPostAsync(model.ModelId);
             if (post == null)
                 return NotFound();
+
+            if (!permissionService.Authorize(Permission.PostCanModify, post))
+                return Unauthorized();
 
             var result = modelModifier.SetValue(post, model.PropertyName, model.Value);
             if (!result.Succeeded)
@@ -85,6 +83,9 @@ namespace Supp.Web.Pages.Posts
             if (post == null)
                 return NotFound();
 
+            if (!permissionService.Authorize(Permission.PostCanVote, post))
+                return Unauthorized();
+
             await votingService.VoteUpAsync(post);
             return new JsonResult("OK");
         }
@@ -95,18 +96,35 @@ namespace Supp.Web.Pages.Posts
             if (post == null)
                 return NotFound();
 
+            if (!permissionService.Authorize(Permission.PostCanVote, post))
+                return Unauthorized();
+
             await votingService.UndoAsync(post);
             return new JsonResult("OK");
         }
 
         public async Task<IActionResult> OnPostAllComments(int postId)
         {
+            var post = await postService.GetPostAsync(postId);
+            if (post == null)
+                return NotFound();
+
+            if (!permissionService.Authorize(Permission.PostCanRead, post))
+                return Unauthorized();
+
             var comments = await commentService.AllCommentsAsync(postId);
             return new AjaxResponse(comments.Select(c => new CommentModel(c)));
         }
 
         public async Task<IActionResult> OnPostNewComment([FromBody] CommentModel model)
         {
+            var post = await postService.GetPostAsync(model.PostId);
+            if (post == null)
+                return NotFound();
+
+            if (!permissionService.Authorize(Permission.CommentCanAdd, post))
+                return Unauthorized();
+
             var comment = await commentService.AddCommentAsync(model.PostId, model.Body);
             return new AjaxResponse(new CommentModel(comment));
         }
@@ -117,6 +135,9 @@ namespace Supp.Web.Pages.Posts
             if (comment == null)
                 return NotFound();
 
+            if (!permissionService.Authorize(Permission.CommentCanPin, comment))
+                return Unauthorized();
+
             await commentService.PinComment(comment);
             return new JsonResult("Ok");
         }
@@ -126,6 +147,9 @@ namespace Supp.Web.Pages.Posts
             var comment = await commentService.GetCommentAsync(commentId);
             if (comment == null)
                 return NotFound();
+
+            if (!permissionService.Authorize(Permission.CommentCanPin, comment))
+                return Unauthorized();
 
             await commentService.UnpinComment(comment);
             return new JsonResult("Ok");

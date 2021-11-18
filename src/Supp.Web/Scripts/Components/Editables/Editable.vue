@@ -13,7 +13,7 @@
                       v-model="value"
                       v-show="editMode"></textarea>
         </span>
-        <span>
+        <span v-if="canEdit">
             <button @click="edit" v-show="!editMode" class="btn btn-sm btn-outline-dark" @mouseover="buttonMouseOver" @mouseout="buttonMouseOut">
                 <i class="fas fa-pen-square"></i>
             </button>

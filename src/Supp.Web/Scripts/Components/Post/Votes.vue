@@ -2,14 +2,14 @@
     <div class="d-flex flex-column vote-component">
         <div class="placeholder" v-if="voted">&nbsp;</div>
         <button class="btn-vote btn"
-                @click="vote" v-if="!voted" title="zagłosuj">
+                @click="vote" v-if="!voted && canVote" title="zagłosuj">
             <i class="fas fa-caret-up"></i>
         </button>
         <div class="votes" :class="{ voted: voted }">
             {{ votes }}
         </div>
         <button class="btn-vote btn"
-                @click="undo" v-if="voted" title="cofnij głos">
+                @click="undo" v-if="voted && canVote" title="cofnij głos">
             <i class="fas fa-caret-down"></i>
         </button>
     </div>
@@ -22,7 +22,8 @@
             initVoted: Boolean,
             initVotes: Number,
             voteUrl: String,
-            undoUrl: String
+            undoUrl: String,
+            canVote: Boolean
         },
         data() {
             return {

@@ -1,13 +1,14 @@
-﻿using Supp.Core.Projects;
+﻿using Supp.Core.Authorization;
+using Supp.Core.Projects;
 using Supp.Core.Tags;
+using Supp.Core.Users;
 using Supp.Core.Voting;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Supp.Core.Posts
 {
-    public class Post
+    public class Post : IProjectResource
     {
         public int Id { get; set; }
         public DateTimeOffset CreationDate { get; set; }
@@ -16,6 +17,8 @@ namespace Supp.Core.Posts
         public string Body { get; set; }
         public int ProjectId { get; set; }
         public Project Project { get; set; }
+        public User Author { get; set; }
+        public string AuthorId { get; set; }
 
         public PostType Type { get; set; }
         public PostStatus Status { get; set; }
@@ -35,5 +38,9 @@ namespace Supp.Core.Posts
 
         public ICollection<Vote> Votes { get; set; }
             = new List<Vote>();
+
+        public string GetAuthorId() => AuthorId;
+
+        public Project GetProject() => Project;
     }
 }

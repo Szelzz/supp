@@ -1,5 +1,9 @@
 ﻿export default {
     props: {
+        'canEdit': {
+            type: Boolean,
+            default: true
+        },
         'updateUrl': String,
         'propertyName': String,
         'modelId': Number,

@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Supp.Core.Data.EF;
+using Supp.Core.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,16 +13,22 @@ namespace Supp.Core.Posts
 {
     public class PostService
     {
+        private readonly ClaimsPrincipal user;
         private readonly ApplicationDbContext dbContext;
+        private readonly UserManager<User> userManager;
 
-        public PostService(ApplicationDbContext dbContext)
+        public PostService(ClaimsPrincipal user, ApplicationDbContext dbContext, UserManager<User> userManager)
         {
+            this.user = user;
             this.dbContext = dbContext;
+            this.userManager = userManager;
         }
 
         public async Task CreatePostAsync(Post post)
         {
             post.Id = 0;
+            post.Author = null;
+            post.AuthorId = userManager.GetUserId(user);
             dbContext.Add(post);
             await dbContext.SaveChangesAsync();
         }
@@ -47,6 +56,7 @@ namespace Supp.Core.Posts
         {
             return await dbContext.Posts
                 .Include(p => p.Comments)
+                .Include(p => p.Project)
                 .Include(p => p.Tags)
                 .ThenInclude(t => t.Tag)
                 .FirstOrDefaultAsync(p => p.Id == postId);

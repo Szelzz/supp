@@ -32,7 +32,6 @@ namespace Supp.Core.Authorization
                 ProjectId = int.Parse(match.Groups[2].Value);
         }
 
-
         public Role Role { get; }
         public int? ProjectId { get; }
 
