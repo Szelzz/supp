@@ -48,9 +48,6 @@ namespace Supp.Web
             services.AddScoped<IModelModifier, ProjectTagsModifier>();
             services.AddScoped<IModelModifier, PostTagsModifier>();
 
-            // Security
-            services.AddAuthorization();
-
             // Asp specific
             services.AddRouting(o => { o.LowercaseUrls = true; o.LowercaseQueryStrings = true; });
             services.AddRazorPages()
