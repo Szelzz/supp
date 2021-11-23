@@ -7,11 +7,6 @@ namespace Supp.Core.Authorization
 {
     public enum Role
     {
-        Admin = 1,
-        User = 2,
-
-        // resource based
-
         [Display(Name = "Właściciel projektu")]
         [ResourceRole(typeof(Project))]
         [PermissionRole(Permission.ProjectCanRead)]
