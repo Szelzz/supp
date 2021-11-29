@@ -7,6 +7,7 @@
     import PostList from './Components/Post/PostList.vue'
     import InlineSelector from './Components/Post/InlineSelector.vue'
     import ProjectTagsEditable from './Components/Editables/ProjectTagsEditable.vue'
+    import PostPriorityEditable from './Components/Editables/PostPriorityEditable.vue'
     import ProjectPermissionSettings from './Components/Editables/ProjectPermissionSettings.vue'
 
     export default {
@@ -20,7 +21,8 @@
             PostList,
             InlineSelector,
             ProjectTagsEditable,
-            ProjectPermissionSettings
+            ProjectPermissionSettings,
+            PostPriorityEditable
         }
     }
 </script>

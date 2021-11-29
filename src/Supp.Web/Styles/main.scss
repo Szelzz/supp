@@ -112,3 +112,13 @@ body {
         text-align: center;
     }
 }
+
+.btn-secret {
+    background: none;
+    border: 0;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.10);
+    }
+}
+
