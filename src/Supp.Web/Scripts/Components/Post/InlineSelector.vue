@@ -2,13 +2,12 @@
     <div class="inline-selector">
         <input type="hidden" :name="inputName" :value="selected" />
         <div class="btn-group">
-
             <button type="button"
                     v-for="(optionName, optionValue) in options"
                     :value="optionValue"
                     class="btn"
                     v-bind:class="{'btn-outline-primary':selected != optionValue ,'btn-primary': selected == optionValue}"
-                    @click.prevent="selectOption(optionValue)">
+                    @click.prevent="selected = optionValue">
                 {{ optionName }}
             </button>
         </div>
@@ -28,11 +27,6 @@
         data() {
             return {
                 selected: null
-            }
-        },
-        methods: {
-            selectOption(option) {
-                this.selected = option;
             }
         }
     }
