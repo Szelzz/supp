@@ -13,7 +13,9 @@
     </votes>
 
     <div>
-        @Html.PostTypeToIcon(Model.Post.Type) | @Html.PostPriorityToIcon(Model.Post.Priority)
+        @Html.PostTypeToIcon(Model.Post.Type) 
+        | @Html.PostPriorityToIcon(Model.Post.Priority) 
+        | Status: @Html.DisplayFor(m=>m.Post.Status)
     </div>
     @*Tagi*@
     <div>

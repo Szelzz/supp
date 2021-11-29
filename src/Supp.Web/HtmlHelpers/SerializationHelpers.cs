@@ -1,4 +1,5 @@
-﻿using Supp.Core.Authorization;
+﻿using Microsoft.AspNetCore.Html;
+using Supp.Core.Authorization;
 using Supp.Core.Tags;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,8 @@ namespace Supp.Web.HtmlHelpers
             }
             return dict;
         }
+
+        //public static HtmlString Enum
 
     }
 }
